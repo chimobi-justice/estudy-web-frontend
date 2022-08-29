@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 import Button from '../../../Components/Button';
 import Logo from '../../../Components/Logo';
 
@@ -10,18 +11,18 @@ const NavBar = () => {
   return (
     <>
       <header className='p-3'>
-        <nav className='flex justify-between w-9/12 m-auto items-center'>
+        <nav className='flex justify-between w-11/12 m-auto items-center'>
           <Logo />
 
           <ul className='flex justify-between'>
-            <li className='pl-5'><Link to="/">About</Link></li>
-            <li className='pl-5'><Link to="/">Categories</Link></li>
-            <li className='pl-5'><Link to="/">Courses</Link></li>
-            <li className='pl-5'><Link to="/">Blog</Link></li>
+            <li className='pl-5'><NavLink to="/">About</NavLink></li>
+            <li className='pl-5'><NavLink to="/">Categories</NavLink></li>
+            <li className='pl-5'><NavLink to="/">Courses</NavLink></li>
+            <li className='pl-5'><NavLink to="/">Blog</NavLink></li>
           </ul>
 
           <ul className='flex justify-between items-center'>
-            <li className='pl-5'><Link to="/">Sign in</Link></li>
+            <li className='pl-5'><NavLink to="/">Sign in</NavLink></li>
             <li className='pl-5'>
               <Button 
                 type="button" 

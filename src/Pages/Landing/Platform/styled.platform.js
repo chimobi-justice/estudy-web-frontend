@@ -19,6 +19,6 @@ export const PlatformImageWrapper = styled.div`
 `;
 
 export const PlatformImage = styled.img`
-  width: 80%;
+  width: 100%;
   height: 150px;
 `;

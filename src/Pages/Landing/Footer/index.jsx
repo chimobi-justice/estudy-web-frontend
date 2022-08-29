@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+
 import StyledFooter from './styled.footer';
+
 import Logo from '../../../Components/Logo';
 
 import { FacebookFilled, InstagramFilled, TwitterCircleFilled } from '@ant-design/icons';

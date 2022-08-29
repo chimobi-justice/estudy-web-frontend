@@ -5,12 +5,12 @@ export const CourseWrapper = styled.section`
 `;
 
 export const CourseHolder = styled.div`
-  width: 60%;
+  width: 90%;
   margin: 35px auto;
 `;
 
 export const CourseBoxImage = styled.img`
   width: 100%;
-  height: 150px;
+  height: 200px;
   border-radius: 4px;
 `;
