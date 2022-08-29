@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import {
   BellOutlined,
@@ -12,10 +12,8 @@ import { StudentNav } from "./styled.Navbar";
 
 const Navbar = ({ label }) => {
   const [toggle, setToggle] = useState(false);
-  // const inputEl = useRef(null);
 
   const handleSearch = () => {
-    // inputEl.current.focus();
     setToggle(!toggle);
   };
 
