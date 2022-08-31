@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 import Button from '../../../Components/Button';
 import Logo from '../../../Components/Logo';
@@ -15,14 +15,14 @@ const NavBar = () => {
           <Logo />
 
           <ul className='flex justify-between'>
-            <li className='pl-5'><NavLink to="/">About</NavLink></li>
-            <li className='pl-5'><NavLink to="/">Categories</NavLink></li>
-            <li className='pl-5'><NavLink to="/">Courses</NavLink></li>
-            <li className='pl-5'><NavLink to="/">Blog</NavLink></li>
+            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>About</Link></li>
+            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>Categories</Link></li>
+            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>Courses</Link></li>
+            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>Blog</Link></li>
           </ul>
 
           <ul className='flex justify-between items-center'>
-            <li className='pl-5'><NavLink to="/">Sign in</NavLink></li>
+            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>Sign in</Link></li>
             <li className='pl-5'>
               <Button 
                 type="button" 
