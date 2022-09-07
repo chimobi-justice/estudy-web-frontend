@@ -4,10 +4,10 @@ import { Breadcrumb, Tabs } from "antd";
 
 import StudentLayout from "../../../Layouts/Student";
 
-import Overview from "./Tabs/overview";
+import Overview from "./Tabs/Overview";
 import FAQ from "./Tabs/FAQ";
-import Discussion from "./Tabs/discussion";
-import Review from "./Tabs/reviews";
+import Discussion from "./Tabs/Discussion";
+import Review from "./Tabs/Reviews";
 
 import CourseOverviewModule from "./courseOverviewModule";
 
