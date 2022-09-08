@@ -1,6 +1,6 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Progress, Rate, Form, Input } from "antd";
-import Button from "../../../../Components/Button";
+import Button from "../../../../../Components/Button";
 
 const { TextArea } = Input;
 
