@@ -5,7 +5,7 @@ import Logo from '../../../Components/Logo';
 
 const NavBar = () => {
   const handleClick = () => {
-    console.log('click')
+    window.location.href = 'register?auth=student';
   }
 
   return (
@@ -22,7 +22,7 @@ const NavBar = () => {
           </ul>
 
           <ul className='flex justify-between items-center'>
-            <li className='pl-5'><Link to="/" className='text-gray-600 hover:text-gray-400'>Sign in</Link></li>
+            <li className='pl-5'><Link to="/login" className='text-gray-600 hover:text-gray-400'>Sign in</Link></li>
             <li className='pl-5'>
               <Button 
                 type="button" 
