@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-import signupImage from "../../assets/images/auth.gif";
+import loginImage from "../../assets/images/auth.gif";
 
 import { useFormik } from "formik";
-import { validateSchema } from "../../validations/signup";
+import { validateSchema } from "../../validations/login";
 
 import { Input } from "antd";
 import {
@@ -14,18 +14,17 @@ import {
 
 import Button from "../../Components/Button";
 
-const Signup = () => {
-  const _handleSignup = () => {
-    console.log("signing");
+const Login = () => {
+  const _handleLogin = () => {
+    console.log("loading...");
   };
 
   const formilk = useFormik({
     initialValues: {
-      fullname: "",
       emailAddress: "",
       password: "",
     },
-    onSubmit: _handleSignup,
+    onSubmit: _handleLogin,
     validationSchema: validateSchema,
   });
 
@@ -34,7 +33,7 @@ const Signup = () => {
   return (
     <div className="flex items-center">
       <div className="w-3/6">
-        <img src={signupImage} alt="" />
+        <img src={loginImage} alt="" />
       </div>
       <div className="w-3/6">
         <h1 className="text-4xl font-bold text-center">
@@ -50,9 +49,9 @@ const Signup = () => {
           className="w-9/12 p-4 rounded-sm shadow-lg bg-white mx-10"
           onSubmit={handleSubmit}
         >
-          <h1 className="text-gray-400 text-3xl font-bold mb-1">Sign up</h1>
+          <h1 className="text-gray-400 text-3xl font-bold mb-1">Sign in</h1>
           <p className="text-red-600 text-sm font-semimedium mb-1">
-            Sign up with
+            Sign in with
           </p>
           <div className="flex justify-between w-full mb-8 mt-3">
             <div>
@@ -81,37 +80,20 @@ const Signup = () => {
             </div>
           </div>
 
-          <div className="flex justify-between mb-6">
-            <div className="w-6/12 mr-1">
-              <Input
-                type="text"
-                placeholder="FullName"
-                name="fullname"
-                value={values.fullname}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                prefix={<UserOutlined />}
-                style={{ padding: "6px" }}
-              />
-              {errors.fullname && (
-                <p className="text-red-300 mb-0">{errors.fullname}</p>
-              )}
-            </div>
-            <div className="w-6/12 ml-1">
-              <Input
-                type="email"
-                placeholder="Email Address"
-                name="emailAddress"
-                value={values.emailAddress}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                prefix={<UserOutlined />}
-                style={{ padding: "6px" }}
-              />
-              {errors.emailAddress && (
-                <p className="text-red-300 mb-0">{errors.emailAddress}</p>
-              )}
-            </div>
+          <div className="mb-6">
+            <Input
+              type="email"
+              placeholder="Email Address"
+              name="emailAddress"
+              value={values.emailAddress}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              prefix={<UserOutlined />}
+              style={{ padding: "6px" }}
+            />
+            {errors.emailAddress && (
+              <p className="text-red-300 mb-0">{errors.emailAddress}</p>
+            )}
           </div>
 
           <div className="mb-6">
@@ -137,10 +119,10 @@ const Signup = () => {
           <p className="mt-2 mb-0">
             Already have an account?
             <Link
-              to="/login"
+              to="/register?auth=student"
               className="text-green-700 hover:text-green-900 hover:underline ml-1"
             >
-              Sign in
+              Sign up
             </Link>
           </p>
         </form>
@@ -149,4 +131,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
