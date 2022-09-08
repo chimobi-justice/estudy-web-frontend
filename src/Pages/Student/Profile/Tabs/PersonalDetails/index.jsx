@@ -28,7 +28,13 @@ const PersonalDetails = () => {
     validationSchema: validateSchema,
   });
 
-  const { handleChange, handleBlur, handleSubmit, errors, values } = formik;
+  const { 
+    handleChange, 
+    handleBlur, 
+    handleSubmit, 
+    errors, 
+    values 
+  } = formik;
 
   const props = {
     action: "https://www.estudyweb/v2/profile-upload",
