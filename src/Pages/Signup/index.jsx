@@ -7,6 +7,8 @@ import { validateSchema } from "../../validations/signup";
 
 import { Input } from "antd";
 import {
+  EyeInvisibleOutlined,
+  EyeTwoTone,
   FacebookFilled,
   GoogleOutlined,
   UserOutlined,
@@ -115,7 +117,7 @@ const Signup = () => {
           </div>
 
           <div className="mb-6">
-            <Input
+            <Input.Password
               type="password"
               placeholder="Password"
               name="password"
@@ -123,6 +125,9 @@ const Signup = () => {
               onChange={handleChange}
               onBlur={handleBlur}
               prefix={<UserOutlined />}
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
               style={{ padding: "6px" }}
             />
             {errors.password && (
