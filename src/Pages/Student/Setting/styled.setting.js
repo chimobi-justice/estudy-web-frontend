@@ -29,7 +29,7 @@ export const AsideLeftBox = styled.div`
   }
 `;
 
-export const AsideRighttWrapper = styled.div`
+export const AsideRightWrapper = styled.div`
   width: 75%;
   height: 250px;
   padding: 12px;

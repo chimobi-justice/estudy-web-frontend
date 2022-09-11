@@ -13,7 +13,7 @@ import LearningReminder from "./LearningReminder";
 import {
   Wrapper,
   AsideLeftWrapper,
-  AsideRighttWrapper,
+  AsideRightWrapper,
   AsideLeftBox,
 } from "./styled.setting";
 
@@ -44,7 +44,7 @@ const StudentSetting = () => {
           ))}
         </AsideLeftWrapper>
 
-        <AsideRighttWrapper>
+        <AsideRightWrapper>
           {active === 1 ? (
             <General />
           ) : active === 2 ? (
@@ -56,7 +56,7 @@ const StudentSetting = () => {
           ) : (
             <LearningReminder />
           )}
-        </AsideRighttWrapper>
+        </AsideRightWrapper>
       </Wrapper>
     </StudentLayout>
   );
