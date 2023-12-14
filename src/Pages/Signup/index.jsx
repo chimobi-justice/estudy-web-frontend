@@ -1,34 +1,57 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from 'react-router-dom';
 
-import signupImage from "../../assets/images/auth.gif";
+import { useFormik } from 'formik';
+import { signUpvalidateSchema } from '../../validations/signup';
 
-import { useFormik } from "formik";
-import { validateSchema } from "../../validations/signup";
+import SignUpUser from '../../auth/SignUp';
 
-import { Input } from "antd";
+import { Input } from 'antd';
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   FacebookFilled,
   GoogleOutlined,
   UserOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import Button from "../../Components/Button";
+import Button from '../../Components/Button';
+
+import signupImage from '../../assets/images/auth.gif';
 
 const Signup = () => {
-  const _handleSignup = () => {
-    console.log("signing");
+  const { signUpMutation } = SignUpUser();
+
+  const [searchParams] = useSearchParams();
+
+  let queryString = '';
+
+  if (searchParams.get('auth') === 'student') {
+    queryString = 'mentee';
+  } else {
+    queryString = 'mentor';
+  }
+
+  const _handleSignup = (values) => {
+    signUpMutation.mutate({
+      firstname: values.firstname,
+      lastname: values.lastname,
+      email: values.email,
+      password: values.password,
+      role: queryString,
+    });
+
+    console.log('first', '>>>>>>>')
   };
 
   const formilk = useFormik({
     initialValues: {
-      fullname: "",
-      emailAddress: "",
-      password: "",
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
     },
     onSubmit: _handleSignup,
-    validationSchema: validateSchema,
+    validationSchema: signUpvalidateSchema,
   });
 
   const { handleChange, handleBlur, handleSubmit, errors, values } = formilk;
@@ -64,7 +87,7 @@ const Signup = () => {
               >
                 <GoogleOutlined
                   className="mr-1"
-                  style={{ color: "red", fontSize: "17px" }}
+                  style={{ color: 'red', fontSize: '17px' }}
                 />
                 <span className="text-gray-500">Sign up with Google</span>
               </Link>
@@ -76,7 +99,7 @@ const Signup = () => {
               >
                 <FacebookFilled
                   className="mr-1"
-                  style={{ color: "blue", fontSize: "17px" }}
+                  style={{ color: 'blue', fontSize: '17px' }}
                 />
                 <span className="text-gray-500">Sign up with Facebook</span>
               </Link>
@@ -87,52 +110,69 @@ const Signup = () => {
             <div className="w-6/12 mr-1">
               <Input
                 type="text"
-                placeholder="FullName"
-                name="fullname"
-                value={values.fullname}
+                placeholder="First Name"
+                name="firstname"
+                value={values.firstname}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 prefix={<UserOutlined />}
-                style={{ padding: "6px" }}
+                style={{ padding: '6px' }}
               />
-              {errors.fullname && (
-                <p className="text-red-300 mb-0">{errors.fullname}</p>
+              {errors.firstname && (
+                <p className="text-red-300 mb-0">{errors.firstname}</p>
               )}
             </div>
             <div className="w-6/12 ml-1">
               <Input
-                type="email"
-                placeholder="Email Address"
-                name="emailAddress"
-                value={values.emailAddress}
+                type="text"
+                placeholder="Last Name"
+                name="lastname"
+                value={values.lastname}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 prefix={<UserOutlined />}
-                style={{ padding: "6px" }}
+                style={{ padding: '6px' }}
               />
-              {errors.emailAddress && (
-                <p className="text-red-300 mb-0">{errors.emailAddress}</p>
+              {errors.lastname && (
+                <p className="text-red-300 mb-0">{errors.lastname}</p>
               )}
             </div>
           </div>
 
-          <div className="mb-6">
-            <Input.Password
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              prefix={<UserOutlined />}
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              style={{ padding: "6px" }}
-            />
-            {errors.password && (
-              <p className="text-red-300 mb-0">{errors.password}</p>
-            )}
+          <div className="flex justify-between mb-6">
+            <div className="w-6/12 mr-1">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                prefix={<UserOutlined />}
+                style={{ padding: '6px' }}
+              />
+              {errors.email && (
+                <p className="text-red-300 mb-0">{errors.email}</p>
+              )}
+            </div>
+            <div className="w-6/12 ml-1">
+              <Input.Password
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                prefix={<UserOutlined />}
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                style={{ padding: '6px' }}
+              />
+              {errors.password && (
+                <p className="text-red-300 mb-0">{errors.password}</p>
+              )}
+            </div>
           </div>
 
           <div>

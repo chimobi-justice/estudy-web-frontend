@@ -1,21 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from 'react-router-dom';
 
-import { Breadcrumb, Tabs } from "antd";
+import { useQuery } from '@tanstack/react-query';
 
-import StudentLayout from "../../../Layouts/Student";
+import { Breadcrumb, Tabs } from 'antd';
 
-import Overview from "./Tabs/Overview";
-import FAQ from "./Tabs/FAQ";
-import Discussion from "./Tabs/Discussion";
-import Review from "./Tabs/Reviews";
+import StudentLayout from '../../../Layouts/Student';
 
-import CourseOverviewModule from "./courseOverviewModule";
+import Overview from './Tabs/Overview';
+import FAQ from './Tabs/FAQ';
+import Discussion from './Tabs/Discussion';
+import Review from './Tabs/Reviews';
+
+import CourseOverviewModule from './courseOverviewModule';
+
+import { getSingleCourseOverview } from '../../../api/courses';
+import { getUser } from '../../../api/users';
 
 const { Item } = Breadcrumb;
 
 const { TabPane } = Tabs;
 
 const StudentCourseOverview = () => {
+  const params = useParams();
+
+  const { data: getCourseOverview } = useQuery({
+    queryKey: ['course-overview', params],
+    queryFn: getSingleCourseOverview(params),
+  });
+
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUser,
+  });
+
+  console.log(getCourseOverview, user);
+
   return (
     <StudentLayout label="My Course">
       <div className="flex justify-between">

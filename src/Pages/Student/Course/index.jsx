@@ -1,23 +1,32 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import StudentLayout from "../../../Layouts/Student";
+import { useQuery } from '@tanstack/react-query';
 
-import { STUDENT_COURSE } from "../../../constants/studentCourse";
+import StudentLayout from '../../../Layouts/Student';
+
+import { getAllCourse } from '../../../api/courses';
 
 import {
   AppstoreOutlined,
   BarsOutlined,
   CaretDownOutlined,
-} from "@ant-design/icons";
+  DashOutlined,
+} from '@ant-design/icons';
+import { Select, Skeleton } from 'antd';
 
-import { Select } from "antd";
+import { CourseHolderImage, CourseIconImage } from './styled.Course';
 
 const { Option } = Select;
 
 const StudentCourse = () => {
   const [enrollCourse, setEnrollCourse] = useState(false);
   const [singleEnrollCourseBox, setSingleEnrollCourseBox] = useState(0);
+
+  const { data: getAllCourses, isLoading } = useQuery({
+    queryKey: ['courses'],
+    queryFn: getAllCourse,
+  });
 
   const handleEnrollCourseBox = () => {
     setEnrollCourse(!enrollCourse);
@@ -28,7 +37,7 @@ const StudentCourse = () => {
   };
 
   return (
-    <StudentLayout label="My Course">
+    <StudentLayout label="Courses">
       <div className="flex justify-end items-center my-3">
         <div className="bg-white pt-1 pl-2 pr-2 pb-2 shadow-sm">
           <CaretDownOutlined />
@@ -41,7 +50,7 @@ const StudentCourse = () => {
             <Select
               defaultValue="all category"
               style={{
-                width: 120
+                width: 120,
               }}
             >
               <Option value="marketing">Marketing</Option>
@@ -59,16 +68,48 @@ const StudentCourse = () => {
         </div>
       </div>
 
+      {isLoading && (
+        <>
+          <div>
+            <Skeleton.Input
+              active={true}
+              block={true}
+              size="default"
+              style={{ height: '150px' }}
+            />
+          </div>
+
+          <div style={{ marginTop: '15px', marginBottom: '15px' }}>
+            <Skeleton.Input
+              active={true}
+              block={true}
+              size="default"
+              style={{ height: '150px' }}
+            />
+          </div>
+
+          <div>
+            <Skeleton.Input
+              active={true}
+              block={true}
+              size="default"
+              style={{ height: '150px' }}
+            />
+          </div>
+        </>
+      )}
       <div className="grid grid-cols-4 gap-8 mb-3">
-        {STUDENT_COURSE.map((course) => (
+        {getAllCourses?.data?.payload?.map((course) => (
           <Link
-            to={`/dashboard/course/${course.id}/overview`}
+            to={`/s/dashboard/course/${course.id}/overview`}
             key={course.id}
             className="relative"
           >
             <div className="bg-white shadow-lg p-4">
               <div className="flex justify-between items-center my-2">
-                <div>{course.CourseIconImage}</div>
+                <div>
+                  <CourseIconImage src={course.thumbnail} />
+                </div>
                 <div
                   className="text-gray-500"
                   onClick={(e) => {
@@ -77,7 +118,7 @@ const StudentCourse = () => {
                     e.preventDefault();
                   }}
                 >
-                  {course.cardDashOutline}
+                  <DashOutlined />
                 </div>
               </div>
               {enrollCourse && singleEnrollCourseBox === course.id && (
@@ -86,22 +127,24 @@ const StudentCourse = () => {
                 </div>
               )}
 
-              <h3 className="my-2 font-medium text-gray-600">
-                History of graphic design
-              </h3>
+              <h3 className="my-2 font-medium text-gray-600">{course.name}</h3>
               <div className="flex items-center my-2">
-                {course.CourseHolderImage}
-                <p className="text-xs text-gray-500">Williams pill</p>
+                <div>
+                  <CourseHolderImage src={course.profile.picture} />
+                </div>
+                <p className="text-xs text-gray-500 mb-0 ml-2">
+                  {course.profile.firstname} {course.profile.lastname}
+                </p>
               </div>
               <div className="flex justify-between items-center my-2">
                 <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course.lesson} 15 Lesson
+                  {course.price}
                 </p>
                 <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course.hours} 12 hours
+                  {course.video.length} hours
                 </p>
               </div>
-              <p className="text-sm text-gray-600 font-bold my-2">Complete</p>
+              {/* <p className="text-sm text-gray-600 font-bold my-2">Complete</p> */}
             </div>
           </Link>
         ))}

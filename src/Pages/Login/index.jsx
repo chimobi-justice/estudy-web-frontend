@@ -1,33 +1,47 @@
-import { Link } from "react-router-dom";
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import loginImage from "../../assets/images/auth.gif";
+import { useFormik } from 'formik';
+import { signInvalidateSchema } from '../../validations/login';
 
-import { useFormik } from "formik";
-import { validateSchema } from "../../validations/login";
+import SignInUser from '../../auth/SignIn';
 
-import { Input } from "antd";
+import { Input } from 'antd';
 import {
   EyeInvisibleOutlined,
   EyeTwoTone,
   FacebookFilled,
   GoogleOutlined,
   UserOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import Button from "../../Components/Button";
+import Button from '../../Components/Button';
+
+import loginImage from '../../assets/images/auth.gif';
+
+import { AuthContext } from '../../context/authContext';
 
 const Login = () => {
+  const { signInMutation } = SignInUser();
+
+  const { setValue } = useContext(AuthContext);
+
   const _handleLogin = () => {
-    console.log("loading...");
+    signInMutation.mutate({
+      email: values.email,
+      password: values.password,
+    });
+
+    setValue(true);
   };
 
   const formilk = useFormik({
     initialValues: {
-      emailAddress: "",
-      password: "",
+      email: '',
+      password: '',
     },
     onSubmit: _handleLogin,
-    validationSchema: validateSchema,
+    validationSchema: signInvalidateSchema,
   });
 
   const { handleChange, handleBlur, handleSubmit, errors, values } = formilk;
@@ -65,7 +79,7 @@ const Login = () => {
               >
                 <GoogleOutlined
                   className="mr-1"
-                  style={{ color: "red", fontSize: "17px" }}
+                  style={{ color: 'red', fontSize: '17px' }}
                 />
                 <span className="text-gray-500">Sign up with Google</span>
               </Link>
@@ -77,7 +91,7 @@ const Login = () => {
               >
                 <FacebookFilled
                   className="mr-1"
-                  style={{ color: "blue", fontSize: "17px" }}
+                  style={{ color: 'blue', fontSize: '17px' }}
                 />
                 <span className="text-gray-500">Sign up with Facebook</span>
               </Link>
@@ -88,15 +102,15 @@ const Login = () => {
             <Input
               type="email"
               placeholder="Email Address"
-              name="emailAddress"
-              value={values.emailAddress}
+              name="email"
+              value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
               prefix={<UserOutlined />}
-              style={{ padding: "6px" }}
+              style={{ padding: '6px' }}
             />
-            {errors.emailAddress && (
-              <p className="text-red-300 mb-0">{errors.emailAddress}</p>
+            {errors.email && (
+              <p className="text-red-300 mb-0">{errors.email}</p>
             )}
           </div>
 
@@ -112,7 +126,7 @@ const Login = () => {
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
-              style={{ padding: "6px" }}
+              style={{ padding: '6px' }}
             />
             {errors.password && (
               <p className="text-red-300 mb-0">{errors.password}</p>
@@ -120,7 +134,11 @@ const Login = () => {
           </div>
 
           <div>
-            <Button label="Register" bgColor="primary" type="submit" />
+            <Button
+              label={signInMutation.isLoading ? 'Signing in...' : 'Sign In'}
+              bgColor="primary"
+              type="submit"
+            />
           </div>
 
           <p className="mt-2 mb-0">
