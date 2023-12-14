@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import { STUDENT_COURSE_OVERVIEW } from "../../../constants/studentCourseOverview";
+import { STUDENT_COURSE_OVERVIEW } from '../../../constants/studentCourseOverview';
 
 import {
   CheckCircleTwoTone,
   DownCircleOutlined,
   FieldTimeOutlined,
   FileOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import { Timeline } from "antd";
+import { Timeline } from 'antd';
 
 const { Item } = Timeline;
 
@@ -32,9 +32,11 @@ const CourseOverviewModule = () => {
           <div
             className="flex justify-between items-center cursor-pointer mb-3"
             onClick={() => {
+              // eslint-disable-next-line no-lone-blocks
               {
                 handleCourseOverViewModule();
               }
+              // eslint-disable-next-line no-lone-blocks
               {
                 handleSingleActiveModule(overview.id);
               }

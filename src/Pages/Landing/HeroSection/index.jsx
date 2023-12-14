@@ -5,13 +5,13 @@ const HeroSection = () => {
   return (
     <section>
       <div className='flex justify-between w-11/12 m-auto items-center'>
-        <div>
+        <div className='w-11/12'>
           <HeroContent className='text-5xl font-bold text-gray-900'>
-            Learn From Home &amp; Make Skilled Yourself
+            Learn From Home &amp; Make Yourself Skilled
           </HeroContent>
         </div>
 
-        <div>
+        <div className='w-11/12'>
           <img src={Estudy_Hero} alt="" />
         </div>
       </div>

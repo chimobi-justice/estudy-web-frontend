@@ -17,6 +17,10 @@ const Navbar = ({ label }) => {
     setToggle(!toggle);
   };
 
+  const handleLoggedOut = () => {
+    console.log('click logout');
+  }
+
   return (
     <StudentNav className="flex justify-between">
       <div className="flex justify-between w-7/12 items-center">
@@ -26,7 +30,7 @@ const Navbar = ({ label }) => {
           {toggle && <Input  type="text" name="search" className="p-1 border-2 border-black" />}
         </div>
       </div>
-      <div className="flex w-1/7 items-center">
+      <div className="flex w-1/7 items-center" onClick={handleLoggedOut}>
         <BellOutlined className="mr-4 mb-3" />
         <p className="flex items-center">
           <Avatar
