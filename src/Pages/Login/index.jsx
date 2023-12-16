@@ -17,22 +17,20 @@ import {
 
 import Button from '../../Components/Button';
 
-import loginImage from '../../assets/images/auth.gif';
-
 import { AuthContext } from '../../context/authContext';
 
 const Login = () => {
   const { signInMutation } = SignInUser();
 
-  const { setValue } = useContext(AuthContext);
+  const { setStoredUserCookie } = useContext(AuthContext);
 
   const _handleLogin = () => {
     signInMutation.mutate({
       email: values.email,
-      password: values.password,
+      password: values.password
     });
 
-    setValue(true);
+    setStoredUserCookie(true);
   };
 
   const formilk = useFormik({
@@ -47,110 +45,101 @@ const Login = () => {
   const { handleChange, handleBlur, handleSubmit, errors, values } = formilk;
 
   return (
-    <div className="flex items-center">
-      <div className="w-3/6">
-        <img src={loginImage} alt="" />
-      </div>
-      <div className="w-3/6">
-        <h1 className="text-4xl font-bold text-center">
-          <Link
-            to="/"
-            className="text-green-500 hover:text-green-500"
-            title="Home"
-          >
-            Estudy
-          </Link>
-        </h1>
-        <form
-          className="w-9/12 p-4 rounded-sm shadow-lg bg-white mx-10"
-          onSubmit={handleSubmit}
+    <div className="bg-gray-900 h-screen overflow-scroll">
+      <h1 className="text-2xl font-bold p-4">
+        <Link
+          to="/"
+          className="text-green-500 hover:text-green-600"
+          title="Home"
         >
-          <h1 className="text-gray-400 text-3xl font-bold mb-1">
-            Welcome Back
-          </h1>
-          <p className="text-red-600 text-sm font-semimedium mb-1">
-            Sign in with
-          </p>
-          <div className="flex justify-between w-full mb-8 mt-3">
-            <div>
-              <Link
-                to=""
-                className="flex items-center border border-gray-300 rounded-lg p-2 hover:bg-gray-50"
-              >
-                <GoogleOutlined
-                  className="mr-1"
-                  style={{ color: 'red', fontSize: '17px' }}
-                />
-                <span className="text-gray-500">Sign up with Google</span>
-              </Link>
+          Estudy
+        </Link>
+      </h1>
+      <div className="lg:flex lg:flex-row justify-center items-center lg:my-28 sm:my-4">
+        <div className="lg:w-5/12 sm:w-full">
+          <form className="lg:w-7/12 sm:w-11/12 lg:mx-32 sm:mx-4 p-2" onSubmit={handleSubmit}>
+            <div className="w-full mb-6 mt-3">
+              <div className="mb-3 text-center">
+                <Link
+                  to=""
+                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2"
+                >
+                  <GoogleOutlined
+                    className="mr-1"
+                    style={{ color: 'red', fontSize: '17px' }}
+                  />
+                  <span className="text-white">Sign up with Google</span>
+                </Link>
+              </div>
+              <div>
+                <Link
+                  to=""
+                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2"
+                >
+                  <FacebookFilled
+                    className="mr-1"
+                    style={{ color: 'blue', fontSize: '17px' }}
+                  />
+                  <span className="text-white">Sign up with Facebook</span>
+                </Link>
+              </div>
             </div>
-            <div>
-              <Link
-                to=""
-                className="flex items-center border border-gray-300 rounded-lg p-2 text-gray-500 hover:bg-gray-50"
-              >
-                <FacebookFilled
-                  className="mr-1"
-                  style={{ color: 'blue', fontSize: '17px' }}
-                />
-                <span className="text-gray-500">Sign up with Facebook</span>
-              </Link>
+
+            <div className="mb-6">
+              <Input
+                type="email"
+                placeholder="Email Address"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                prefix={<UserOutlined />}
+                style={{ padding: '8px', borderRadius: '7px' }}
+              />
+              {errors.email && (
+                <p className="text-red-300 mb-0">{errors.email}</p>
+              )}
             </div>
-          </div>
 
-          <div className="mb-6">
-            <Input
-              type="email"
-              placeholder="Email Address"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              prefix={<UserOutlined />}
-              style={{ padding: '6px' }}
-            />
-            {errors.email && (
-              <p className="text-red-300 mb-0">{errors.email}</p>
-            )}
-          </div>
+            <div className="mb-6">
+              <Input.Password
+                type="password"
+                placeholder="Password"
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                prefix={<UserOutlined />}
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+                style={{ padding: '8px', borderRadius: '7px' }}
+              />
+              {errors.password && (
+                <p className="text-red-300 mb-0">{errors.password}</p>
+              )}
+            </div>
 
-          <div className="mb-6">
-            <Input.Password
-              type="password"
-              placeholder="Password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              prefix={<UserOutlined />}
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              style={{ padding: '6px' }}
-            />
-            {errors.password && (
-              <p className="text-red-300 mb-0">{errors.password}</p>
-            )}
-          </div>
+            <div>
+              <Button
+                label={signInMutation.isLoading ? 'Signing in...' : 'Sign In'}
+                bgColor="primary"
+                type="submit"
+                size="large"
+              />
+            </div>
 
-          <div>
-            <Button
-              label={signInMutation.isLoading ? 'Signing in...' : 'Sign In'}
-              bgColor="primary"
-              type="submit"
-            />
-          </div>
-
-          <p className="mt-2 mb-0">
-            Already have an account?
-            <Link
-              to="/register?auth=student"
-              className="text-green-700 hover:text-green-900 hover:underline ml-1"
-            >
-              Sign up
-            </Link>
-          </p>
-        </form>
+            <p className="mt-12 mb-0 text-white text-center">
+              Don’t have an account yet?
+              <Link
+                to="/register?auth=student"
+                className="text-green-700 hover:text-green-900 hover:underline ml-1"
+              >
+                Sign Up
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

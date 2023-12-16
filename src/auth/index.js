@@ -16,52 +16,58 @@ const useAuth = () => {
       url: urlEndpoint,
       method: 'POST',
       data: fields,
-      headers: { 'Content-Type': 'application/json' },
     });
 
     try {
       if (status === 200) {
-        const title = data?.message;
+        const title = data?.data?.message;
         successNotification(title);
 
-        if (data?.payload?.role === 'mentee') {
+        if (data?.data?.payload === 'mentee') {
           navigate('/s/dashboard');
-        } else {
+        }
+        if (data?.data?.payload === 'mentor') {
           navigate('/m/dashboard');
         }
       }
 
       if (status === 201) {
-        // const title = data?.message;
-        navigate('/auth/confirm');
+        const title = data?.data?.message;
 
-        // successNotification(`${title} Please check your mail to verify`);
+        successNotification(`${title} Please logged into your account`);
         return;
       }
     } catch (errorResponse) {
-      console.log(errorResponse, '<>');
       if (errorResponse) {
         errorNotification(errorResponse?.response?.data?.message);
       }
     }
   }
+  
+  const getToken = async () => {
+    await axiosInstance.get(`sanctum/csrf-cookie`);
+  }
+
 
   async function signUp(fields) {
-    authServerCall(`${baseURL}/auth/signup`, fields);
+    await getToken();
+    await authServerCall(`${baseURL}auth/signup`, fields);
   }
 
   async function signIn(fields) {
-    authServerCall(`${baseURL}/auth/signin`, fields);
+    await getToken();
+    await authServerCall(`${baseURL}auth/signin`, fields);
   }
 
-  async function verifyEmail(fields) {
-    authServerCall(`${baseURL}/auth/verify`, fields);
+  async function signOut() {
+    await getToken();
+    await authServerCall(`${baseURL}auth/signout`, null);
   }
 
   return {
     signUp,
     signIn,
-    verifyEmail,
+    signOut
   };
 };
 

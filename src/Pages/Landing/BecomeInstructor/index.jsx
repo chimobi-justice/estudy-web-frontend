@@ -19,7 +19,7 @@ const BecomeInstructor = () => {
       <BecomeInstructorHolder>
         <BecomeInstructorContentBox>
           <h3 className="text-3xl text-white font-bold mb-3 leading-10">
-            Do you want to be a instructor?
+            Do you want to be an instructor?
           </h3>
           <p className="text-sm text-white font-light mb-3 leading-6">
             Explore your creativity as a instructor with people. A professional
@@ -34,7 +34,7 @@ const BecomeInstructor = () => {
         </BecomeInstructorContentBox>
 
         <BecomeInstructorImageBox>
-          <img src={lifetime} alt="" />
+          <img src={lifetime} alt="" className="lg:w-full sm:w-10"/>
         </BecomeInstructorImageBox>
       </BecomeInstructorHolder>
     </BecomeInstructorWrapper>

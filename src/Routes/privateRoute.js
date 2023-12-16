@@ -1,11 +1,11 @@
-// import { useContext } from 'react';
+import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-// import { AuthContext } from '../context/authContext';
+import { AuthContext } from '../context/authContext';
 
 const PrivateRoute = ({ children }) => {
-  // const { storedValue } = useContext(AuthContext);
+  const { getStoredUserCookie } = useContext(AuthContext);
 
-  if (localStorage.getItem('kpq') === null) {
+  if (!getStoredUserCookie) {
     <Navigate to="/login" />;
   } else {
     return children;

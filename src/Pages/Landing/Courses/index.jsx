@@ -11,10 +11,10 @@ const HomeCourse = () => {
 
   return (
     <CourseWrapper className='pt-8 pb-8'>
-      <h3 className='text-3xl font-bold text-gray-900 w-3/12 m-auto'>Our Popular courses</h3>
+      <h3 className='text-2xl text-center font-bold text-gray-900 lg:w-3/12 sm:w-full m-auto'>Our Popular courses</h3>
       <CourseHolder>
-        <div className='flex justify-between'>
-          <div className="bg-white border border-gray-50 shadow-lg rounded-lg w-3/12 mr-2">
+        <div className='grid lg:grid-cols-4 sm:grid-cols-1 gap-3'>
+          <div className="bg-white border border-gray-200 rounded-lg w-ful mr-2 p-4">
             <CourseBoxImage src={CourseImgage} alt="" />
             <div className='flex justify-between p-2 items-center'>
               <p className='font-semibold text-green-600'>$199</p>
@@ -31,7 +31,7 @@ const HomeCourse = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-50 shadow-lg rounded-lg w-3/12 mr-2 ml-2">
+          <div className="bg-white border border-gray-200 rounded-lg w-ful mr-2 ml-2 p-4">
             <CourseBoxImage src={CourseImgage} alt="" />
             <div className='flex justify-between p-2 items-center'>
               <p className='font-semibold text-green-600'>$199</p>
@@ -48,7 +48,7 @@ const HomeCourse = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-50 shadow-lg rounded-lg w-3/12 mr-2 ml-2">
+          <div className="bg-white border border-gray-200 rounded-lg w-ful mr-2 ml-2 p-4">
             <CourseBoxImage src={CourseImgage} alt="" />
             <div className='flex justify-between p-2 items-center'>
               <p className='font-semibold text-green-600'>$199</p>
@@ -65,7 +65,7 @@ const HomeCourse = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-50 shadow-lg rounded-lg w-3/12 ml-2">
+          <div className="bg-white border border-gray-200 rounded-lg w-ful ml-2 p-4">
             <CourseBoxImage src={CourseImgage} alt="" />
             <div className='flex justify-between p-2 items-center'>
               <p className='font-semibold text-green-600'>$199</p>

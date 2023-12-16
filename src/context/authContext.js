@@ -1,13 +1,23 @@
 import { createContext } from 'react';
-import useLocalStorage from '../user-storage/useLocalStorage';
+import useCookieStorage from '../user-storage/useCookies';
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [ storedValue, setValue] = useLocalStorage(null);
-  
+  const [
+    getStoredUserCookie, 
+    setStoredUserCookie, 
+    clearStoredUserCookie 
+   ] = useCookieStorage();
+
   return (
-    <AuthContext.Provider value={{ storedValue, setValue }}>
+    <AuthContext.Provider
+      value={{
+        getStoredUserCookie,
+        setStoredUserCookie,
+        clearStoredUserCookie,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

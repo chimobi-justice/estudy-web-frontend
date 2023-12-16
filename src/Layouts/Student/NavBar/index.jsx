@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useState } from 'react';
 
-import {
-  BellOutlined,
-  CaretDownOutlined,
-  SearchOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { Avatar, Input } from "antd";
+import { getUser } from '../../../api/users';
+import { useQuery } from '@tanstack/react-query';
 
-import { StudentNav } from "./styled.Navbar";
+import { SearchOutlined, UserOutlined } from '@ant-design/icons';
+import { Avatar, Input } from 'antd';
+
+import { StudentNav } from './styled.Navbar';
 
 const Navbar = ({ label }) => {
   const [toggle, setToggle] = useState(false);
@@ -16,10 +14,10 @@ const Navbar = ({ label }) => {
   const handleSearch = () => {
     setToggle(!toggle);
   };
-
-  const handleLoggedOut = () => {
-    console.log('click logout');
-  }
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: getUser,
+  });
 
   return (
     <StudentNav className="flex justify-between">
@@ -27,21 +25,26 @@ const Navbar = ({ label }) => {
         <h1 className="font-bold text-lg">{label}</h1>
         <div className="w-9/12 flex items-center">
           <SearchOutlined className="mr-1" onClick={handleSearch} />
-          {toggle && <Input  type="text" name="search" className="p-1 border-2 border-black" />}
+          {toggle && (
+            <Input
+              type="text"
+              name="search"
+              className="p-1 border-2 border-black"
+            />
+          )}
         </div>
       </div>
-      <div className="flex w-1/7 items-center" onClick={handleLoggedOut}>
-        <BellOutlined className="mr-4 mb-3" />
+      <div className="flex w-1/7 items-center">
         <p className="flex items-center">
           <Avatar
             shape="circle"
             size="small"
             icon={<UserOutlined />}
             style={{
-              marginRight: "3px"
+              marginRight: '3px',
             }}
           />
-          Justice TheCode <CaretDownOutlined />
+          {user?.data?.data?.fullname ? user?.data?.data?.fullname : 'Guest'}
         </p>
       </div>
     </StudentNav>
