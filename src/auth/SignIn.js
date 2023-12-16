@@ -1,6 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import QUERY_KEY from '../constants/queryKeys';
+import { useMutation } from '@tanstack/react-query';
 
 import useAuth from '.';
 
@@ -9,16 +7,10 @@ import { errorNotification } from '../helpers/notification';
 const SignInUser = () => {
   const { signIn } = useAuth();
 
-  const queryClient = useQueryClient();
-
   const signInMutation = useMutation({
     mutationFn: signIn,
-    onSuccess: (data) => {
-      queryClient.setQueryData([QUERY_KEY.user], data);
-      queryClient.invalidateQueries([QUERY_KEY.user]);
-    },
-    onError: (error) => {
-      errorNotification(error);
+    onError: (error)  => {
+      errorNotification(error?.response?.data?.message);
     },
   });
 

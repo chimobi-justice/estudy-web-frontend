@@ -1,8 +1,7 @@
 import * as Yup from "yup";
 
 export const signUpvalidateSchema = Yup.object({
-  firstname: Yup.string().required("Required"),
-  lastname: Yup.string().required("Required"),
+  fullname: Yup.string().required("Required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Required"),

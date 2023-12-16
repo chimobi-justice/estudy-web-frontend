@@ -1,26 +1,26 @@
 import Cookies from 'js-cookie';
 
-const USER_COOKIE_KEY = 'kci';
+const USER_COOKIE_KEY = 'uc';
 
 const useCookieStorage = () => {
-  const getStoredUser = () => {
+  const getStoredUserCookie = () => {
     const storedUser = Cookies.get(USER_COOKIE_KEY);
     return storedUser ? JSON.parse(storedUser) : null;
   };
 
-  const setStoredUser = (user) => {
+  const setStoredUserCookie = (user) => {
     Cookies.set(USER_COOKIE_KEY, JSON.stringify(user));
   };
 
-  const clearStoredUser = () => {
+  const clearStoredUserCookie = () => {
     Cookies.remove(USER_COOKIE_KEY);
   };
 
-  return {
-    getStoredUser,
-    setStoredUser,
-    clearStoredUser,
-  };
+  return [
+    getStoredUserCookie,
+    setStoredUserCookie,
+    clearStoredUserCookie,
+  ];
 };
 
 export default useCookieStorage;

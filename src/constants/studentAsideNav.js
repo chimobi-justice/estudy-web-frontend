@@ -50,5 +50,5 @@ export const STUDENT_ASIDE_NAV = [
     path: "/s/dashboard/setting",
     name: "setting",
     icon: <SettingOutlined className="mr-1" />,
-  }
+  },
 ];

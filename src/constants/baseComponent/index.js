@@ -9,8 +9,6 @@ import StudentCourseOverview from '../../Pages/Student/CousreOverview';
 import StudentProfile from '../../Pages/Student/Profile';
 import StudentSetting from '../../Pages/Student/Setting';
 import StudentChat from '../../Pages/Student/Chat';
-import ConfirmEmail from '../../Pages/confirmEmail';
-import VerifyEmail from '../../Pages/verifyEmail';
 
 export const BaseComponent = [
   {
@@ -26,16 +24,6 @@ export const BaseComponent = [
   {
     Component: Login,
     path: '/login',
-    useAuth: false,
-  },
-  {
-    Component: ConfirmEmail,
-    path: '/auth/confirm',
-    useAuth: false,
-  },
-  {
-    Component: VerifyEmail,
-    path: '/auth/verify',
     useAuth: false,
   },
   {

@@ -1,23 +1,40 @@
-import { NavLink } from "react-router-dom";
+import { useContext } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-import "./AsideNav.css";
+import './AsideNav.css';
 
-import Logo from "../../../Components/Logo";
-import Button from "../../../Components/Button";
+import Logo from '../../../Components/Logo';
+import Button from '../../../Components/Button';
 
-import lifetime from "../../../assets/images/lifetime.svg";
+import { STUDENT_ASIDE_NAV } from '../../../constants/studentAsideNav';
 
-import { STUDENT_ASIDE_NAV } from "../../../constants/studentAsideNav";
-
-import { StudentAsideNavWrapper, StudentAsideNavImg } from "./styled.AsideNav";
+import { StudentAsideNavWrapper } from './styled.AsideNav';
+import useAuth from '../../../auth';
+import { successNotification } from '../../../helpers/notification';
+import { AuthContext } from '../../../context/authContext';
 
 const AsideNav = () => {
+  const { clearStoredUserCookie } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const { signOut } = useAuth();
+
+  const handleLoggedOut = () => {
+    signOut();
+    clearStoredUserCookie()
+    navigate('/login');
+    successNotification('logged out successfully');
+  };
+
   return (
     <>
       <StudentAsideNavWrapper className="shadow-lg">
         <div className="text-center p-1">
           <Logo />
-          <p className="text-sm text-gray-600 font-normal mt-1">Learn From Home</p>
+          <p className="text-sm text-gray-600 font-normal mt-1">
+            Learn From Home
+          </p>
         </div>
 
         <ul className="mt-3 mb-2">
@@ -32,15 +49,17 @@ const AsideNav = () => {
               </NavLink>
             </li>
           ))}
-        </ul>
 
-        <div className="text-center pb-2">
-          <StudentAsideNavImg>
-            <img src={lifetime} alt="" />
-          </StudentAsideNavImg>
-          <p className="text-sm text-gray-600 font-medium mb-1">Upgrade to PRO for more instructors </p>
-          <Button type="button" bgColor="primary" label="Upgrade now" />
-        </div>
+          <div className="absolute bottom-8 w-full">
+            <Button
+              type="submit"
+              handleClick={handleLoggedOut}
+              bgColor="primary"
+              size="large"
+              label="Log out"
+            />
+          </div>
+        </ul>
       </StudentAsideNavWrapper>
     </>
   );
