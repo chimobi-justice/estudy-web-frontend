@@ -6,7 +6,7 @@ const config = {
   baseURL: baseURL,
   headers: {
     'Accept': 'application/json',
-    'X-Requested-With': 'XRequestedWith',
+    'X-Requested-With': 'XMLHttpRequest',
   },
   withCredentials: true,
 };
