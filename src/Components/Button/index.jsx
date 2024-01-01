@@ -1,8 +1,8 @@
 import StyledButton from './styled.button';
 
-const Button = ({ type, handleClick, label, bgColor,size }) => {
+const Button = ({ type, handleClick, label, bgColor,size, disabled }) => {
   return (
-    <StyledButton type={type} onClick={handleClick} color={bgColor} size={size}>
+    <StyledButton type={type} onClick={handleClick} color={bgColor} size={size} disabled={disabled}>
       {label}
     </StyledButton>
   );

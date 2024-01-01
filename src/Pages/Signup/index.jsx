@@ -71,7 +71,7 @@ const Signup = () => {
               <div className="mb-3 text-center">
                 <Link
                   to=""
-                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2 hover:bg-gray-50"
+                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2"
                 >
                   <GoogleOutlined
                     className="mr-1"
@@ -83,7 +83,7 @@ const Signup = () => {
               <div>
                 <Link
                   to=""
-                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2 hover:bg-gray-50"
+                  className="flex flex-row justify-center items-center border border-gray-300 rounded-lg p-2"
                 >
                   <FacebookFilled
                     className="mr-1"

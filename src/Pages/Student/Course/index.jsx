@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
-import StudentLayout from '../../../Layouts/Student';
+import Layout from '../../../Layouts';
 
-import { getAllCourse } from '../../../api/courses';
+import { studentAllCourse } from '../../../api/courses';
 
 import {
   AppstoreOutlined,
@@ -13,9 +13,10 @@ import {
   CaretDownOutlined,
   DashOutlined,
 } from '@ant-design/icons';
-import { Select, Skeleton } from 'antd';
+import { Avatar, Select } from 'antd';
 
 import { CourseHolderImage, CourseIconImage } from './styled.Course';
+import Skeleton from '../../../Components/Skeleton';
 
 const { Option } = Select;
 
@@ -25,7 +26,7 @@ const StudentCourse = () => {
 
   const { data: getAllCourses, isLoading } = useQuery({
     queryKey: ['courses'],
-    queryFn: getAllCourse,
+    queryFn: studentAllCourse,
   });
 
   const handleEnrollCourseBox = () => {
@@ -37,7 +38,7 @@ const StudentCourse = () => {
   };
 
   return (
-    <StudentLayout label="Courses">
+    <Layout label="Courses">
       <div className="flex justify-end items-center my-3">
         <div className="bg-white pt-1 pl-2 pr-2 pb-2 shadow-sm">
           <CaretDownOutlined />
@@ -68,88 +69,72 @@ const StudentCourse = () => {
         </div>
       </div>
 
-      {isLoading && (
-        <>
-          <div>
-            <Skeleton.Input
-              active={true}
-              block={true}
-              size="default"
-              style={{ height: '150px' }}
-            />
-          </div>
+      {isLoading && <Skeleton />}
 
-          <div style={{ marginTop: '15px', marginBottom: '15px' }}>
-            <Skeleton.Input
-              active={true}
-              block={true}
-              size="default"
-              style={{ height: '150px' }}
-            />
-          </div>
-
-          <div>
-            <Skeleton.Input
-              active={true}
-              block={true}
-              size="default"
-              style={{ height: '150px' }}
-            />
-          </div>
-        </>
-      )}
       <div className="grid grid-cols-4 gap-8 mb-3">
-        {getAllCourses?.data?.payload?.map((course) => (
+        {getAllCourses?.data?.data?.map((course) => (
           <Link
-            to={`/s/dashboard/course/${course.id}/overview`}
-            key={course.id}
+            to={`/s/course/${course?.id}/overview`}
+            key={course?.id}
             className="relative"
           >
             <div className="bg-white shadow-lg p-4">
               <div className="flex justify-between items-center my-2">
                 <div>
-                  <CourseIconImage src={course.thumbnail} />
+                  <CourseIconImage src={course?.thumbnail} />
                 </div>
                 <div
                   className="text-gray-500"
                   onClick={(e) => {
                     handleEnrollCourseBox();
-                    getCourseBoxById(course.id);
+                    getCourseBoxById(course?.id);
                     e.preventDefault();
                   }}
                 >
                   <DashOutlined />
                 </div>
               </div>
-              {enrollCourse && singleEnrollCourseBox === course.id && (
-                <div className="absolute top-12 left-36 z-10 bg-gray-700 p-1 text-white hover:bg-gray-400">
+              {enrollCourse && singleEnrollCourseBox === course?.id && (
+                <div className="absolute top-12 left-36 z-10 bg-gray-700 p-1 text-white hover:bg-gray-400" onClick={(e) => {
+                  e.preventDefault()
+                  alert('enroll')
+                }}>
                   Enroll Course
                 </div>
               )}
 
-              <h3 className="my-2 font-medium text-gray-600">{course.name}</h3>
+              <h3 className="my-2 font-medium text-gray-600">{course?.name}</h3>
               <div className="flex items-center my-2">
                 <div>
-                  <CourseHolderImage src={course.profile.picture} />
+                  {course?.profile?.avatar ? (
+                    <CourseHolderImage src={course?.profile?.profile} />
+                  ) : (
+                    <Avatar
+                      shape="circle"
+                      size="small"
+                      style={{
+                        marginRight: '3px',
+                      }}
+                    />
+                  )}
                 </div>
                 <p className="text-xs text-gray-500 mb-0 ml-2">
-                  {course.profile.firstname} {course.profile.lastname}
+                  {course?.profile?.fullname}
                 </p>
               </div>
               <div className="flex justify-between items-center my-2">
                 <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course.price}
+                  {course?.price}
                 </p>
                 <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course.video.length} hours
+                  {course?.video?.length} hours
                 </p>
               </div>
-              {/* <p className="text-sm text-gray-600 font-bold my-2">Complete</p> */}
             </div>
           </Link>
         ))}
       </div>
-    </StudentLayout>
+    </Layout>
   );
 };
 

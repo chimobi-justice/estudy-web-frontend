@@ -1,3 +1,7 @@
 body {
     background: #ffffffe3;
 }
+
+ul {
+    margin-bottom: 0;
+}

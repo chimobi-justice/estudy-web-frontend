@@ -1,10 +1,10 @@
-import StudentLayout from "../../Layouts/Student";
+import Layout from "../../Layouts";
 
 const StudentDashboard = () => {
   return (
-    <StudentLayout label="Dashboard">
+    <Layout label="Dashboard">
       <p>Dashboard here</p>
-    </StudentLayout>
+    </Layout>
   )
 }
 

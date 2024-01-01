@@ -7,6 +7,7 @@ const config = {
   headers: {
     'Accept': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
+    'Authorization': 'Bearer ' + localStorage.getItem('uc'),
   },
   withCredentials: true,
 };

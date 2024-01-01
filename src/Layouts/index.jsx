@@ -1,7 +1,7 @@
 import AsideNav from "./AsideNav";
 import Navbar from "./NavBar";
 
-const StudentLayout = ({ label, children }) => {
+const Layout = ({ label, children }) => {
   return (
     <div className="flex p-5">
       <div className="w-1/6">
@@ -15,4 +15,4 @@ const StudentLayout = ({ label, children }) => {
   );
 };
 
-export default StudentLayout
+export default Layout
