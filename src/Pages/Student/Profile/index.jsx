@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import StudentLayout from "../../../Layouts/Student";
+import Layout from "../../../Layouts";
 
 import PersonalDetails from "./Tabs/PersonalDetails";
 
@@ -41,7 +41,7 @@ const StudentProfile = () => {
   };
 
   return (
-    <StudentLayout label="Profile">
+    <Layout label="Profile">
       <div className="flex justify-between">
         <div className="w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
           <div className="w-7/12 m-auto text-center my-7">
@@ -142,7 +142,7 @@ const StudentProfile = () => {
           </Tabs>
         </div>
       </div>
-    </StudentLayout>
+    </Layout>
   );
 };
 

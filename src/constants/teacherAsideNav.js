@@ -8,46 +8,52 @@ import {
   VideoCameraAddOutlined,
 } from "@ant-design/icons";
 
-export const STUDENT_ASIDE_NAV = [
+export const TEACHER_ASIDE_NAV = [
   {
     id: 1,
-    path: "/s/dashboard/",
+    path: "/m/dashboard",
     name: "Dashboard",
     icon: <DashboardOutlined className="mr-1" />,
   },
   {
     id: 2,
-    path: "/s/courses",
+    path: "/m/courses",
     name: "courses",
     icon: <VideoCameraAddOutlined className="mr-1" />,
   },
   {
     id: 3,
-    path: "/s/resourses",
-    name: "resourses",
+    path: "/m/student",
+    name: "Student",
     icon: <FileOutlined className="mr-1" />,
   },
   {
     id: 4,
-    path: "/s/chat",
+    path: "/m/transactions",
+    name: "Transactions",
+    icon: <FileOutlined className="mr-1" />,
+  },
+  {
+    id: 5,
+    path: "/m/chat",
     name: "chat",
     icon: <MessageOutlined className="mr-1" />,
   },
   {
-    id: 5,
-    path: "/s/schedule",
+    id: 6,
+    path: "/m/schedule",
     name: "schedule",
     icon: <ScheduleOutlined className="mr-1" />,
   },
   {
-    id: 6,
-    path: "/s/profile",
+    id: 7,
+    path: "/m/profile",
     name: "profile",
     icon: <UserAddOutlined className="mr-1" />,
   },
   {
-    id: 7,
-    path: "/s/setting",
+    id: 8,
+    path: "/m/setting",
     name: "setting",
     icon: <SettingOutlined className="mr-1" />,
   },

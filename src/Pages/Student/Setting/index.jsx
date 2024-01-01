@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import StudentLayout from "../../../Layouts/Student";
+import Layout from "../../../Layouts";
 
 import STUDENT_SETTING_ASIDE_LEFT_BOX from "../../../constants/studentSetting";
 
@@ -25,7 +25,7 @@ const StudentSetting = () => {
   };
 
   return (
-    <StudentLayout label="Setting">
+    <Layout label="Setting">
       <Wrapper>
         <AsideLeftWrapper>
           {STUDENT_SETTING_ASIDE_LEFT_BOX.map((box) => (
@@ -58,7 +58,7 @@ const StudentSetting = () => {
           )}
         </AsideRightWrapper>
       </Wrapper>
-    </StudentLayout>
+    </Layout>
   );
 };
 

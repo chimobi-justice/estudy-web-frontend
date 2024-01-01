@@ -20,19 +20,21 @@ const useAuth = () => {
 
     try {
       if (status === 200) {
-        const title = data?.data?.message;
+        const title = data?.message;
         successNotification(title);
 
-        if (data?.data?.payload === 'mentee') {
+        if (data?.user_type === 'mentee') {
+          localStorage.setItem('uc', data?.access_token);
           navigate('/s/dashboard');
         }
-        if (data?.data?.payload === 'mentor') {
+        if (data?.user_type === 'mentor') {
+          localStorage.setItem('uc', data?.access_token);
           navigate('/m/dashboard');
         }
       }
 
       if (status === 201) {
-        const title = data?.data?.message;
+        const title = data?.message;
 
         successNotification(`${title} Please logged into your account`);
         return;
@@ -44,23 +46,15 @@ const useAuth = () => {
     }
   }
   
-  const getToken = async () => {
-    await axiosInstance.get(`sanctum/csrf-cookie`);
-  }
-
-
   async function signUp(fields) {
-    await getToken();
     await authServerCall(`${baseURL}auth/signup`, fields);
   }
 
   async function signIn(fields) {
-    await getToken();
     await authServerCall(`${baseURL}auth/signin`, fields);
   }
 
   async function signOut() {
-    await getToken();
     await authServerCall(`${baseURL}auth/signout`, null);
   }
 

@@ -1,4 +1,4 @@
-import StudentLayout from "../../../Layouts/Student";
+import Layout from "../../../Layouts";
 
 import Chat from "./chat";
 
@@ -6,11 +6,11 @@ import { Wrapper } from "./styled.chat";
 
 const StudentChat = () => {
   return (
-    <StudentLayout label="Chat">
+    <Layout label="Chat">
       <Wrapper>
         <Chat />
       </Wrapper>
-    </StudentLayout>
+    </Layout>
   );
 };
 

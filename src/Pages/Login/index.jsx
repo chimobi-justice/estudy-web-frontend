@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFormik } from 'formik';
@@ -17,23 +16,17 @@ import {
 
 import Button from '../../Components/Button';
 
-import { AuthContext } from '../../context/authContext';
-
 const Login = () => {
   const { signInMutation } = SignInUser();
 
-  const { setStoredUserCookie } = useContext(AuthContext);
-
-  const _handleLogin = () => {
+  const _handleLogin = (values) => {
     signInMutation.mutate({
       email: values.email,
       password: values.password
     });
-
-    setStoredUserCookie(true);
   };
 
-  const formilk = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -42,7 +35,7 @@ const Login = () => {
     validationSchema: signInvalidateSchema,
   });
 
-  const { handleChange, handleBlur, handleSubmit, errors, values } = formilk;
+  const { handleChange, handleBlur, handleSubmit, errors, values } = formik;
 
   return (
     <div className="bg-gray-900 h-screen overflow-scroll">
@@ -93,6 +86,7 @@ const Login = () => {
                 value={values.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
+                autoComplete=''
                 prefix={<UserOutlined />}
                 style={{ padding: '8px', borderRadius: '7px' }}
               />

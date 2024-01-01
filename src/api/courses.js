@@ -1,12 +1,55 @@
-import { axiosInstance } from "../axiosInstance";
+import { axiosInstance } from '../axiosInstance';
 
-const getSingleCourseOverview = async (id) => {
-  return await axiosInstance.get(`courses/${id}`);
+// public
+const allCourse = async () => {
+  return await axiosInstance.get('courses/all');
+};
+// end public
+
+// students
+
+const getSingleStudentCourseOverview = async (id) => {
+  return await axiosInstance.get(`courses/s/${id}`);
+};
+
+const studentAllCourse = async () => {
+  return await axiosInstance.get('/courses/s/all');
+};
+// end students
+
+// mentor 
+const createCourse = async (fields) => {
+  return await axiosInstance.post('/courses/m/create', fields);
+};
+
+const getMentorCourses = async () => {
+  return await axiosInstance.get('/courses/m/all');
+};
+
+const deleteCourse = async (id) => {
+  return await axiosInstance.delete(`courses/m/${id}`);
+};
+
+const updateCourse = async (id) => {
+  return await axiosInstance.patch(`courses/m/${id}`);
+};
+
+const getUpdateCourse = async (id) => {
+  return await axiosInstance.get(`courses/m/${id}`);
 };
 
 
-const getAllCourse = async () => {
-  return await axiosInstance.get('/courses/all');
-};
 
-export { getAllCourse, getSingleCourseOverview };
+
+// end mentor
+
+export {
+  allCourse,
+  studentAllCourse,
+  getSingleStudentCourseOverview,
+  createCourse,
+  getMentorCourses,
+  deleteCourse,
+  updateCourse,
+  getUpdateCourse,
+};

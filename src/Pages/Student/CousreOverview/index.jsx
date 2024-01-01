@@ -2,9 +2,11 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useQuery } from '@tanstack/react-query';
 
+import ReactPlayer from 'react-player';
+
 import { Breadcrumb, Tabs } from 'antd';
 
-import StudentLayout from '../../../Layouts/Student';
+import Layout from '../../../Layouts';
 
 import Overview from './Tabs/Overview';
 import FAQ from './Tabs/FAQ';
@@ -13,40 +15,36 @@ import Review from './Tabs/Reviews';
 
 import CourseOverviewModule from './courseOverviewModule';
 
-import { getSingleCourseOverview } from '../../../api/courses';
-import { getUser } from '../../../api/users';
+import { getSingleStudentCourseOverview } from '../../../api/courses';
 
 const { Item } = Breadcrumb;
 
 const { TabPane } = Tabs;
 
 const StudentCourseOverview = () => {
-  const params = useParams();
+  const { id } = useParams();
 
   const { data: getCourseOverview } = useQuery({
-    queryKey: ['course-overview', params],
-    queryFn: getSingleCourseOverview(params),
+    queryKey: ['course-overview', id],
+    queryFn: () => getSingleStudentCourseOverview(id),
   });
-
-  const { data: user } = useQuery({
-    queryKey: ['user'],
-    queryFn: getUser,
-  });
-
-  console.log(getCourseOverview, user);
 
   return (
-    <StudentLayout label="My Course">
+    <Layout label="My Course">
       <div className="flex justify-between">
         <div className="w-9/12 h-auto mr-3 p-3">
-          <div className="h-3/6 rounded-lg bg-emerald-100 shadow-sm"></div>
+          <div className="h-auto rounded-lg shadow-sm">
+            <ReactPlayer url={getCourseOverview?.data?.data?.video} controls width="100" height="100"/>
+          </div>
           <h2 className="text-lg font-bold pt-2 pb-0">
-            Introduction to HTML to advance
+            {getCourseOverview?.data?.data?.name}
           </h2>
 
           <Breadcrumb>
             <Item className="text-xs font-medium">
-              <Link to="">William joe</Link>
+              <Link to="">
+                {getCourseOverview?.data?.data?.profile?.fullname}
+              </Link>
             </Item>
             <Item className="text-xs font-medium">HTML</Item>
             <Item className="text-xs font-medium">
@@ -56,7 +54,9 @@ const StudentCourseOverview = () => {
 
           <Tabs defaultActiveKey="1">
             <TabPane tab="Overview" key="1">
-              <Overview />
+              <Overview
+                description={getCourseOverview?.data?.data?.description}
+              />
             </TabPane>
             <TabPane tab="FAQ" key="2">
               <FAQ />
@@ -80,7 +80,7 @@ const StudentCourseOverview = () => {
           <CourseOverviewModule />
         </div>
       </div>
-    </StudentLayout>
+    </Layout>
   );
 };
 
