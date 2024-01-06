@@ -4,6 +4,7 @@ import { BaseComponent } from '../constants/baseComponent';
 import PrivateRoute from './privateRoute';
 
 import NotFound from '../Components/NotFound';
+import UserProfileContextProvider from '../context/userContext';
 
 const Pages = () => {
   return (
@@ -15,7 +16,9 @@ const Pages = () => {
               path={path}
               element={
                 <PrivateRoute>
-                  <Component />
+                  <UserProfileContextProvider>
+                    <Component />
+                  </UserProfileContextProvider>
                 </PrivateRoute>
               }
             />

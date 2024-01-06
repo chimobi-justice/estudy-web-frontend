@@ -5,11 +5,12 @@ import './AsideNav.css';
 import Logo from '../../Components/Logo';
 import Button from '../../Components/Button';
 
-import { STUDENT_ASIDE_NAV } from '../../constants/studentAsideNav';
 
 import { AsideNavWrapper } from './styled.AsideNav';
 import useAuth from '../../auth';
 import { successNotification } from '../../helpers/notification';
+
+import { STUDENT_ASIDE_NAV } from '../../constants/studentAsideNav';
 import { TEACHER_ASIDE_NAV } from '../../constants/teacherAsideNav';
 
 const AsideNav = () => {

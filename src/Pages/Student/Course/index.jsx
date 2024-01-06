@@ -1,44 +1,59 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import Layout from '../../../Layouts';
 
-import { studentAllCourse } from '../../../api/courses';
+import { getEnrollCourses, studentUnEnrollCourse } from '../../../api/courses';
+
+import EmptyState from '../../../assets/images/No_data.png';
 
 import {
   AppstoreOutlined,
   BarsOutlined,
   CaretDownOutlined,
-  DashOutlined,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
-import { Avatar, Select } from 'antd';
+import { Select } from 'antd';
 
-import { CourseHolderImage, CourseIconImage } from './styled.Course';
+import { CourseIconImage } from './styled.Course';
 import Skeleton from '../../../Components/Skeleton';
+import { Modal } from 'flowbite-react';
+import Button from '../../../Components/Button';
+import {
+  errorNotification,
+  successNotification,
+} from '../../../helpers/notification';
 
 const { Option } = Select;
 
 const StudentCourse = () => {
-  const [enrollCourse, setEnrollCourse] = useState(false);
-  const [singleEnrollCourseBox, setSingleEnrollCourseBox] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
+  const [idValue, setIdValue] = useState(null);
 
-  const { data: getAllCourses, isLoading } = useQuery({
-    queryKey: ['courses'],
-    queryFn: studentAllCourse,
+  const queryClient = useQueryClient();
+
+  const { data: getCourseEnrolled, isLoading } = useQuery({
+    queryKey: ['courses-enroll'],
+    queryFn: getEnrollCourses,
   });
 
-  const handleEnrollCourseBox = () => {
-    setEnrollCourse(!enrollCourse);
-  };
-
-  const getCourseBoxById = (id) => {
-    setSingleEnrollCourseBox(id);
-  };
+  const unEnrollCourseMutation = useMutation({
+    mutationFn: studentUnEnrollCourse,
+    onSuccess: (data) => {
+      successNotification(data?.data?.message);
+      queryClient.invalidateQueries({
+        queryKey: ['courses-enroll'],
+      });
+    },
+    onError: (error) => {
+      errorNotification(error?.response?.data?.message);
+    },
+  });
 
   return (
-    <Layout label="Courses">
+    <Layout label="My Courses">
       <div className="flex justify-end items-center my-3">
         <div className="bg-white pt-1 pl-2 pr-2 pb-2 shadow-sm">
           <CaretDownOutlined />
@@ -72,68 +87,102 @@ const StudentCourse = () => {
       {isLoading && <Skeleton />}
 
       <div className="grid grid-cols-4 gap-8 mb-3">
-        {getAllCourses?.data?.data?.map((course) => (
-          <Link
-            to={`/s/course/${course?.id}/overview`}
-            key={course?.id}
-            className="relative"
-          >
-            <div className="bg-white shadow-lg p-4">
-              <div className="flex justify-between items-center my-2">
-                <div>
-                  <CourseIconImage src={course?.thumbnail} />
-                </div>
-                <div
-                  className="text-gray-500"
-                  onClick={(e) => {
-                    handleEnrollCourseBox();
-                    getCourseBoxById(course?.id);
-                    e.preventDefault();
-                  }}
-                >
-                  <DashOutlined />
-                </div>
-              </div>
-              {enrollCourse && singleEnrollCourseBox === course?.id && (
-                <div className="absolute top-12 left-36 z-10 bg-gray-700 p-1 text-white hover:bg-gray-400" onClick={(e) => {
-                  e.preventDefault()
-                  alert('enroll')
-                }}>
-                  Enroll Course
-                </div>
-              )}
-
-              <h3 className="my-2 font-medium text-gray-600">{course?.name}</h3>
-              <div className="flex items-center my-2">
-                <div>
-                  {course?.profile?.avatar ? (
-                    <CourseHolderImage src={course?.profile?.profile} />
-                  ) : (
-                    <Avatar
-                      shape="circle"
-                      size="small"
-                      style={{
-                        marginRight: '3px',
+        {getCourseEnrolled &&
+          getCourseEnrolled?.data?.data?.map((course) => (
+            <Link
+              to={`/s/course/${course?.course_id}/overview`}
+              key={course?.id}
+              className="relative"
+            >
+              <div className="bg-white shadow-lg p-4">
+                <div className="flex justify-between items-center my-2">
+                  <div>
+                    <CourseIconImage src={course?.thumbnail} />
+                  </div>
+                  <div>
+                    <Button
+                      label="Unenroll"
+                      type="button"
+                      bgColor="primary"
+                      handleClick={(e) => {
+                        e.preventDefault();
+                        setIdValue(course?.course_id);
+                        setOpenModal(true);
                       }}
                     />
-                  )}
+                  </div>
                 </div>
-                <p className="text-xs text-gray-500 mb-0 ml-2">
-                  {course?.profile?.fullname}
-                </p>
+                <h3 className="my-2 font-medium text-gray-600">
+                  {course?.name}
+                </h3>
+                <div className="flex justify-between items-center my-2">
+                  <p className="flex items-center text-xs text-gray-500 font-thin">
+                    {course?.price}
+                  </p>
+                  <p className="flex items-center text-xs text-gray-500 font-thin">
+                    {course?.video?.length} hours
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between items-center my-2">
-                <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course?.price}
-                </p>
-                <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course?.video?.length} hours
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
       </div>
+
+      {getCourseEnrolled && getCourseEnrolled?.data?.data?.length === 0 && (
+        <>
+          <div
+            style={{ width: '50%', margin: '5em auto', textAlign: 'center' }}
+          >
+            <div style={{ width: '60%', margin: '0px auto' }}>
+              <img
+                src={EmptyState}
+                alt=""
+                style={{ width: '300px', height: '300px', display: 'block' }}
+              />
+            </div>
+            <h2>
+              Enrolled courses will show up here ?
+              <Link to="/s/dashboard">Please Enroll a course</Link>
+            </h2>
+          </div>
+        </>
+      )}
+
+      <Modal
+        show={openModal}
+        size="md"
+        onClose={() => setOpenModal(false)}
+        popup
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <ExclamationCircleOutlined className="mx-auto mb-4 h-14 w-14 text-red-400 text-4xl" />
+            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              Are you sure you want to unenroll this course?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                color="failure"
+                label="Yes, I'm sure"
+                bgColor="primary"
+                type="button"
+                handleClick={() => {
+                  unEnrollCourseMutation.mutate(idValue);
+                  setOpenModal(false);
+                }}
+              />
+              <Button
+                color="gray"
+                label="No, cancel"
+                bgColor="secondary"
+                type="button"
+                handleClick={() => setOpenModal(false)}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </Layout>
   );
 };
