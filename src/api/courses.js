@@ -12,8 +12,20 @@ const getSingleStudentCourseOverview = async (id) => {
   return await axiosInstance.get(`courses/s/${id}`);
 };
 
+const studentEnrollCourse = async (id) => {
+  return await axiosInstance.post(`courses/s/user/${id}/enroll`);
+};
+
+const studentUnEnrollCourse = async (id) => {
+  return await axiosInstance.post(`courses/s/user/${id}/unenroll`);
+};
+
 const studentAllCourse = async () => {
   return await axiosInstance.get('/courses/s/all');
+};
+
+const getEnrollCourses = async () => {
+  return await axiosInstance.get('/courses/s/user/enroll-courses');
 };
 // end students
 
@@ -37,10 +49,6 @@ const updateCourse = async (id) => {
 const getUpdateCourse = async (id) => {
   return await axiosInstance.get(`courses/m/${id}`);
 };
-
-
-
-
 // end mentor
 
 export {
@@ -52,4 +60,7 @@ export {
   deleteCourse,
   updateCourse,
   getUpdateCourse,
+  studentEnrollCourse,
+  getEnrollCourses,
+  studentUnEnrollCourse,
 };

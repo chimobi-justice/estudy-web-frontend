@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
-
-import { getUser } from '../../api/users'
+import { UserProfileContext } from '../../context/userContext';
 
 import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Input } from 'antd';
@@ -10,15 +8,13 @@ import { Avatar, Input } from 'antd';
 import { Nav } from './styled.Navbar';
 
 const Navbar = ({ label }) => {
+  const {user} = useContext(UserProfileContext);
+
   const [toggle, setToggle] = useState(false);
 
   const handleSearch = () => {
     setToggle(!toggle);
   };
-  const { data: user } = useQuery({
-    queryKey: ['user'],
-    queryFn: getUser,
-  });
 
   return (
     <Nav className="flex justify-between">

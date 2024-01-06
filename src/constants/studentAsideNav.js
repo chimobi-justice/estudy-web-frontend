@@ -11,7 +11,7 @@ import {
 export const STUDENT_ASIDE_NAV = [
   {
     id: 1,
-    path: "/s/dashboard/",
+    path: "/s/dashboard",
     name: "Dashboard",
     icon: <DashboardOutlined className="mr-1" />,
   },

@@ -5,9 +5,3 @@ export const CourseIconImage = styled.img`
   border-radius: 50%;
   height: 30px;
 `;
-
-export const CourseHolderImage = styled.img`
-  width: 20px;
-  border-radius: 50%;
-  height: 20px;
-`;

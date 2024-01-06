@@ -33,7 +33,7 @@ const HomeCourse = () => {
                 <div className="flex justify-between p-2 items-center">
                   <p className="font-semibold text-green-600">{course?.price}</p>
                   <p className="bg-gray-100 py-1 px-2 text-sm text-blue-400">
-                    lesson
+                   {course?.video} lesson
                   </p>
                 </div>
                 <h4 className="font-extrabold text-black-400 p-2">

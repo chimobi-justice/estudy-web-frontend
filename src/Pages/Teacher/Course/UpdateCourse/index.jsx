@@ -49,8 +49,6 @@ const UpdateCourse = () => {
       },
     });
 
-    console.log(res);
-
     if (res.status === 200) {
       successNotification(res?.data?.message);
     }
