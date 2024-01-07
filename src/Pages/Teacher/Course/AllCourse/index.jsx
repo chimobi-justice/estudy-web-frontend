@@ -7,6 +7,8 @@ import { Dropdown, Table, Modal } from 'flowbite-react';
 
 import { getMentorCourses, deleteCourse } from '../../../../api/courses';
 
+import EmptyState from '../../../../assets/images/No_data.png';
+
 import { Select } from 'antd';
 import {
   AppstoreOutlined,
@@ -18,6 +20,7 @@ import {
 
 import Layout from '../../../../Layouts';
 import Button from '../../../../Components/Button';
+import Skeleton from '../../../../Components/Skeleton';
 
 const { Option } = Select;
 
@@ -27,7 +30,7 @@ const AllCourse = () => {
 
   const queryClient = useQueryClient();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['courses'],
     queryFn: getMentorCourses,
   });
@@ -83,56 +86,90 @@ const AllCourse = () => {
           </div>
         </div>
 
-        <div className="overflow-x-auto">
-          <Table>
-            <Table.Head>
-              <Table.HeadCell>Course Name</Table.HeadCell>
-              <Table.HeadCell>Video</Table.HeadCell>
-              <Table.HeadCell>Price</Table.HeadCell>
-              <Table.HeadCell>Action</Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {data?.data?.data?.map((d) => (
-                <Table.Row
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
-                  key={d.id}
-                >
-                  <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                    {d.name}
-                  </Table.Cell>
-                  <Table.Cell>{d.video}</Table.Cell>
-                  <Table.Cell>${d.price}</Table.Cell>
-                  <Table.Cell>
-                    <Dropdown
-                      arrowIcon={false}
-                      inline
-                      label={<DashOutlined />}
-                      className="w-32"
-                    >
-                      <Dropdown.Item className="mb-2">
-                        <Link
-                          to={`/m/courses/${d.id}`}
-                          className="text-gray-700 hover:text-gray-700"
-                        >
-                          Edit
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        onClick={() => {
-                          setCheckValue(d.id);
-                          setOpenModal(true);
-                        }}
-                        className="text-red-500 hover:text-red-500 mt-2"
+        {isLoading && <Skeleton />}
+
+        {data && (
+          <div className="overflow-x-auto">
+            <Table>
+              <Table.Head>
+                <Table.HeadCell>Course Name</Table.HeadCell>
+                <Table.HeadCell>Video</Table.HeadCell>
+                <Table.HeadCell>Price</Table.HeadCell>
+                <Table.HeadCell>Day Created</Table.HeadCell>
+                <Table.HeadCell>Action</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
+                {data?.data?.data?.map((d) => (
+                  <Table.Row
+                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                    key={d?.id}
+                  >
+                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                      {d?.name}
+                    </Table.Cell>
+                    <Table.Cell>{d?.video}</Table.Cell>
+                    <Table.Cell>${d?.price}</Table.Cell>
+                    <Table.Cell>{d?.created_at?.human_short}</Table.Cell>
+                    <Table.Cell>
+                      <Dropdown
+                        arrowIcon={false}
+                        inline
+                        label={<DashOutlined />}
+                        className="w-32"
                       >
-                        Delete
-                      </Dropdown.Item>
-                    </Dropdown>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
+                        <Dropdown.Item className="mb-2">
+                          <Link
+                            to={`/m/courses/${d?.id}`}
+                            className="text-gray-700 hover:text-gray-700"
+                          >
+                            Edit
+                          </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item
+                          onClick={() => {
+                            setCheckValue(d.id);
+                            setOpenModal(true);
+                          }}
+                          className="text-red-500 hover:text-red-500 mt-2"
+                        >
+                          Delete
+                        </Dropdown.Item>
+                      </Dropdown>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table.Body>
+            </Table>
+          </div>
+        )}
+
+        {data && data?.data?.data?.length === 0 && (
+          <>
+            <div
+              style={{
+                width: '50%',
+                margin: '5em auto',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ width: '60%', margin: '0px auto' }}>
+                <img
+                  src={EmptyState}
+                  alt=""
+                  style={{
+                    width: '300px',
+                    height: '300px',
+                    display: 'block',
+                  }}
+                />
+              </div>
+              <h2>
+                Your Created courses will show up here ?
+                <Link to="/m/courses/create">Create a course</Link>
+              </h2>
+            </div>
+          </>
+        )}
 
         <Modal
           show={openModal}
