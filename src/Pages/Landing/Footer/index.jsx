@@ -17,8 +17,7 @@ const Footer = () => {
               </a>
             </div>
             <div className="footer-desc">
-              Bluesea Investment Limited – Excellence in Engineering,
-              Procurement, and Construction. Your success is our commitment.
+              Estudy An e-learning platform – Excellence in Teaching,
             </div>
           </div>
         </div>

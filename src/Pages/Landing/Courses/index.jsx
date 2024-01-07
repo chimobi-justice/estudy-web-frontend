@@ -22,7 +22,6 @@ const HomeCourse = () => {
         Our Popular courses
       </h3>
       <CourseHolder>
-
         {isLoading && <Skeleton />}
 
         <div className="grid lg:grid-cols-4 sm:grid-cols-1 gap-3">
@@ -31,14 +30,22 @@ const HomeCourse = () => {
               <div className="bg-white border border-gray-200 rounded-lg w-ful ml-2 p-4">
                 <CourseBoxImage src={course?.thumbnail} alt="" />
                 <div className="flex justify-between p-2 items-center">
-                  <p className="font-semibold text-green-600">{course?.price}</p>
+                  <p className="font-semibold text-green-600">
+                    ${course?.price}
+                  </p>
                   <p className="bg-gray-100 py-1 px-2 text-sm text-blue-400">
-                   {course?.video} lesson
+                    {course?.video} lesson
                   </p>
                 </div>
-                <h4 className="font-extrabold text-black-400 p-2">
-                  {course?.name}
-                </h4>
+                <div className="flex justify-between items-center my-2">
+                  <h4 className="mb-0 font-extrabold text-black-400">
+                    {course?.name}
+                  </h4>
+
+                  <p className="text-xs text-gray-500 font-thin mb-0">
+                    {course?.created_at?.human_short}
+                  </p>
+                </div>
                 <div className="text-center mb-3">
                   <Button
                     type="button"

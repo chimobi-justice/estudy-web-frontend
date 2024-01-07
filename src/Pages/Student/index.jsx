@@ -94,9 +94,7 @@ const StudentDashboard = () => {
                   <DashbaordCourseIconImage src={course?.thumbnail} />
                 </div>
 
-                {course?.isEnrolled ? (
-                   null
-                ) : (
+                {course?.isEnrolled ? null : (
                   <Button
                     label="Enroll"
                     type="button"
@@ -109,7 +107,15 @@ const StudentDashboard = () => {
                 )}
               </div>
 
-              <h3 className="my-2 font-medium text-gray-600">{course?.name}</h3>
+              <div className="flex justify-between items-center my-2">
+                <h3 className="mb-0 font-medium text-gray-600">
+                  {course?.name}
+                </h3>
+
+                <p className="text-xs text-gray-500 font-thin mb-0">
+                  ${course?.price}
+                </p>
+              </div>
               <div className="flex items-center my-2">
                 <div>
                   {course?.profile?.avatar ? (
@@ -132,10 +138,7 @@ const StudentDashboard = () => {
               </div>
               <div className="flex justify-between items-center my-2">
                 <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course?.price}
-                </p>
-                <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course?.video?.length} hours
+                  {course?.created_at?.human}
                 </p>
               </div>
             </div>
