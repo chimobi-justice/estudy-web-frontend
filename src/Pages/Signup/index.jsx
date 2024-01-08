@@ -147,7 +147,7 @@ const Signup = () => {
 
             <div>
               <Button
-                label={signUpMutation.isLoading ? 'Signing in...' : 'Sign In'}
+                label={signUpMutation.isLoading ? 'Signing up...' : 'Sign Up'}
                 bgColor="primary"
                 type="submit"
                 size="large"

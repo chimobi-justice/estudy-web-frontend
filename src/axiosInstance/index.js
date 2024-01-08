@@ -6,8 +6,9 @@ const config = {
   baseURL: baseURL,
   headers: {
     'Accept': 'application/json',
+    'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-    'Authorization': 'Bearer ' + (localStorage.getItem('uc') || ''),
+    'Authorization': `Bearer ${localStorage.getItem('uc')}`,
   },
   withCredentials: true,
 };

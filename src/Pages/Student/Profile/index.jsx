@@ -17,12 +17,16 @@ import {
   UsergroupAddOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import { useContext } from "react";
+import { UserProfileContext } from "../../../context/userContext";
 
 const { TabPane } = Tabs;
 
 const { confirm } = Modal;
 
 const StudentProfile = () => {
+  const { user } = useContext(UserProfileContext);
+
   const handleDeleteModal = () => {
     confirm({
       title: "Are you sure you what to delete",
@@ -45,13 +49,23 @@ const StudentProfile = () => {
       <div className="flex justify-between">
         <div className="w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
           <div className="w-7/12 m-auto text-center my-7">
+          {user?.data?.data?.avatar && (
+            <Avatar
+              shape="circle"
+              size="large"
+              src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+              style={{ height: "65px", width: "65px" }}
+            />
+          )}  
+           {!user?.data?.data?.avatar && (
             <Avatar
               shape="circle"
               size="large"
               icon={<UserOutlined />}
               style={{ height: "65px", width: "65px" }}
             />
-            <p>John doe</p>
+          )}  
+            <p>{user?.data?.data?.fullname}</p>
           </div>
           <div className="flex justify-between text-center">
             <div>

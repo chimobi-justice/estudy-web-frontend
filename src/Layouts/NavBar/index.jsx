@@ -8,7 +8,7 @@ import { Avatar, Input } from 'antd';
 import { Nav } from './styled.Navbar';
 
 const Navbar = ({ label }) => {
-  const {user} = useContext(UserProfileContext);
+  const { user } = useContext(UserProfileContext);
 
   const [toggle, setToggle] = useState(false);
 
@@ -32,17 +32,29 @@ const Navbar = ({ label }) => {
         </div>
       </div>
       <div className="flex w-1/7 items-center">
-        <p className="flex items-center">
-          <Avatar
-            shape="circle"
-            size="small"
-            icon={<UserOutlined />}
-            style={{
-              marginRight: '3px',
-            }}
-          />
-          {user?.data?.fullname ? user?.data?.fullname : 'Guest'}
-        </p>
+        <div className="flex items-center">
+          {user?.data?.data?.avatar && (
+            <Avatar
+              shape="circle"
+              size="small"
+              src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+              style={{
+                marginRight: '3px',
+              }}
+            />
+          )}  
+          {!user?.data?.data?.avatar && (
+            <Avatar
+              shape="circle"
+              size="small"
+              icon={<UserOutlined />}
+              style={{
+                marginRight: '3px',
+              }}
+            />
+          )}
+          {user?.data?.data?.fullname ? user?.data?.data?.fullname : 'Guest'}
+        </div>
       </div>
     </Nav>
   );
