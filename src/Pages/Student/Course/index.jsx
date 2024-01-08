@@ -141,8 +141,7 @@ const StudentCourse = () => {
               />
             </div>
             <h2>
-              Enrolled courses will show up here ?
-              <Link to="/s/dashboard">Please Enroll a course</Link>
+              Enrolled courses will show up here? <Link to="/s/dashboard">Please Enroll a course</Link>
             </h2>
           </div>
         </>

@@ -42,8 +42,9 @@ const deleteCourse = async (id) => {
   return await axiosInstance.delete(`courses/m/${id}`);
 };
 
-const updateCourse = async (id) => {
-  return await axiosInstance.patch(`courses/m/${id}`);
+const updateCourse = async ({ id, data }) => {
+  const response = await axiosInstance.patch(`courses/m/${id}`, data);
+  return response.data; 
 };
 
 const getUpdateCourse = async (id) => {

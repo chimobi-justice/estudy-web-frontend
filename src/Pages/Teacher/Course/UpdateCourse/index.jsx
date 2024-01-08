@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useFormik } from 'formik';
 import { courseValidateSchema } from '../../../../validations/course';
@@ -13,7 +13,7 @@ import Button from '../../../../Components/Button';
 
 import { FileInput, Select } from 'flowbite-react';
 
-import { getUpdateCourse } from '../../../../api/courses';
+import { getUpdateCourse, updateCourse } from '../../../../api/courses';
 import { axiosInstance } from '../../../../axiosInstance';
 import {
   errorNotification,
@@ -27,44 +27,54 @@ const UpdateCourse = () => {
   const [videoPath, setVideoPath] = useState('');
   const [uploadingFile, setUploadingFile] = useState({});
 
+  const queryClient = useQueryClient();
+
   const { id } = useParams();
 
-  const { data } = useQuery({
+  const { data: course_value } = useQuery({
     queryKey: ['courses', id],
     queryFn: () => getUpdateCourse(id),
   });
 
-  const _handleUpdateCourse = async (values) => {
-    const payload = {
+  const updateMutation = useMutation({
+    mutationFn: updateCourse,
+    onSuccess: (data) => {
+      successNotification(data?.message);
+
+      queryClient.invalidateQueries({
+        queryKey: ['courses'],
+      });
+    },
+    onError: (error) => {
+      errorNotification(error?.message);
+    },
+  });
+
+  const _handleUpdateCourse = (values) => {
+     const payload = {
       name: values.name,
       category: values.category,
       price: values.price,
       description: values.description,
-      thumbnail: imagePath || data?.data?.data?.thumbnail,
-      video: videoPath || data?.data?.data?.video,
+      thumbnail: imagePath || course_value?.data?.data?.thumbnail,
+      video: videoPath || course_value?.data?.data?.video,
     };
-    const res = await axiosInstance.patch(`/courses/m/${id}`, payload, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+
+    updateMutation.mutate({
+      id: id, data: payload
     });
-
-    if (res.status === 200) {
-      successNotification(res?.data?.message);
-    }
-
   };
 
   const formik = useFormik({
     initialValues: {
-      name: data?.data?.data?.name ? data?.data?.data?.name : '',
-      price: data?.data?.data?.price ? data?.data?.data?.price : '',
-      category: data?.data?.data?.category ? data?.data?.data?.category : '',
-      description: data?.data?.data?.description
-        ? data?.data?.data?.description
+      name: course_value?.data?.data?.name ? course_value?.data?.data?.name : '',
+      price: course_value?.data?.data?.price ? course_value?.data?.data?.price : '',
+      category: course_value?.data?.data?.category ? course_value?.data?.data?.category : '',
+      description: course_value?.data?.data?.description
+        ? course_value?.data?.data?.description
         : '',
-      thumbnail: data?.data?.data?.thumbnail ? data?.data?.data?.thumbnail : '',
-      video: data?.data?.data?.thumbnail ? data?.data?.data?.video : '',
+      thumbnail: course_value?.data?.data?.thumbnail ? course_value?.data?.data?.thumbnail : '',
+      video: course_value?.data?.data?.thumbnail ? course_value?.data?.data?.video : '',
     },
     onSubmit: _handleUpdateCourse,
     validationSchema: courseValidateSchema,

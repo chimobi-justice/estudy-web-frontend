@@ -61,7 +61,7 @@ const Login = () => {
                     className="mr-1"
                     style={{ color: 'red', fontSize: '17px' }}
                   />
-                  <span className="text-white">Sign up with Google</span>
+                  <span className="text-white">Sign in with Google</span>
                 </Link>
               </div>
               <div>
@@ -73,7 +73,7 @@ const Login = () => {
                     className="mr-1"
                     style={{ color: 'blue', fontSize: '17px' }}
                   />
-                  <span className="text-white">Sign up with Facebook</span>
+                  <span className="text-white">Sign in with Facebook</span>
                 </Link>
               </div>
             </div>
