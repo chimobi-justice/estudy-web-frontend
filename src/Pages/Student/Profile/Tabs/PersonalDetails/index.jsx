@@ -115,7 +115,6 @@ const PersonalDetails = () => {
             }
           }
         } catch (e) {
-          console.log(e)
           errorNotification(e?.response?.data?.errors?.avatar[0]);
         }
       }

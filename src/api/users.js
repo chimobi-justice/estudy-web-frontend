@@ -14,4 +14,10 @@ const userProfileAll = async (fields) => {
   return response.data; 
 };
 
-export { getUser, userProfile, userProfileAll };
+const deleteAccount = async () => {
+  const response = await axiosInstance.post('/user/delete');
+  return response.data; 
+};
+
+
+export { getUser, userProfile, userProfileAll, deleteAccount };
