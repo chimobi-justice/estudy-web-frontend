@@ -1,17 +1,14 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
-import './AsideNav.css';
-
-import Logo from '../../Components/Logo';
-import Button from '../../Components/Button';
-
+import Logo from '../../Logo';
+import Button from '../../Button';
 
 import { AsideNavWrapper } from './styled.AsideNav';
-import useAuth from '../../auth';
-import { successNotification } from '../../helpers/notification';
+import useAuth from '../../../auth';
+import { successNotification } from '../../../helpers/notification';
 
-import { STUDENT_ASIDE_NAV } from '../../constants/studentAsideNav';
-import { TEACHER_ASIDE_NAV } from '../../constants/teacherAsideNav';
+import { STUDENT_ASIDE_NAV } from '../../../constants/studentAsideNav';
+import { TEACHER_ASIDE_NAV } from '../../../constants/teacherAsideNav';
 
 const AsideNav = () => {
   const navigate = useNavigate();
@@ -37,10 +34,10 @@ const AsideNav = () => {
           </p>
         </div>
 
-        <ul className="mt-3 mb-2">
+        <ul className="mt-3 mb-2 block">
           {pathname.includes('/s')
             ? STUDENT_ASIDE_NAV.map((asidenav) => (
-                <li className="py-1" key={asidenav.id}>
+                <li className="py-1 px-2" key={asidenav.id}>
                   <NavLink
                     to={asidenav.path}
                     className="hover:bg-green-100 block p-2 flex items-center text-gray-500 hover:text-gray-500"
@@ -54,7 +51,7 @@ const AsideNav = () => {
 
           {pathname.includes('/m')
             ? TEACHER_ASIDE_NAV.map((asidenav) => (
-                <li className="py-1" key={asidenav.id}>
+                <li className="py-1 px-2" key={asidenav.id}>
                   <NavLink
                     to={asidenav.path}
                     className="hover:bg-green-100 block p-2 flex items-center text-gray-500 hover:text-gray-500"
@@ -66,7 +63,7 @@ const AsideNav = () => {
               ))
             : null}
 
-          <div className="absolute bottom-8 w-full">
+          <div className="absolute bottom-8 w-full p-2">
             <Button
               type="submit"
               handleClick={handleLoggedOut}

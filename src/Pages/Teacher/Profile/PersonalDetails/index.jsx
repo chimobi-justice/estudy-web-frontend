@@ -2,21 +2,18 @@ import { useContext } from 'react';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { UserProfileContext } from '../../../../../context/userContext';
-
-import Button from '../../../../../Components/Button';
-
-import { useFormik } from 'formik';
-
-import { validateSchema } from '../../../../../validations/studentProfile';
+import { UserProfileContext } from '../../../../context/userContext';
 
 import { Input } from 'antd';
-import { userProfileAll } from '../../../../../api/users';
+import { useFormik } from 'formik';
 import {
   errorNotification,
   successNotification,
-} from '../../../../../helpers/notification';
-import UploadAvatar from '../../../../../Components/UploadAvatar';
+} from '../../../../helpers/notification';
+import { userProfileAll } from '../../../../api/users';
+import Button from '../../../../Components/Button';
+import { validateSchema } from '../../../../validations/studentProfile';
+import UploadAvatar from '../../../../Components/UploadAvatar';
 
 const { TextArea } = Input;
 
@@ -68,9 +65,13 @@ const PersonalDetails = () => {
   });
 
   const { handleChange, handleBlur, handleSubmit, errors, values } = formik;
-
+  
   return (
     <>
+      <div className="py-1">
+        <p className="text-2xl text-gray-600">Profile Settings</p>
+      </div>
+
       <UploadAvatar />
 
       <form onSubmit={handleSubmit}>

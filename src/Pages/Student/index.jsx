@@ -120,7 +120,7 @@ const StudentDashboard = () => {
                 <div>
                   {course?.profile?.avatar ? (
                     <DashbaordCourseHolderImage
-                      src={course?.profile?.profile}
+                      src={course?.profile?.avatar}
                     />
                   ) : (
                     <Avatar

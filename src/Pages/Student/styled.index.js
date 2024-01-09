@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
 export const DashbaordCourseIconImage = styled.img`
-  width: 30px;
+  width: 50px;
   border-radius: 50%;
-  height: 30px;
+  height: 50px;
 `;
 
 export const DashbaordCourseHolderImage = styled.img`

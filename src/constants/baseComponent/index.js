@@ -14,6 +14,7 @@ import TeacherDashboard from '../../Pages/Teacher';
 import AllCourse from '../../Pages/Teacher/Course/AllCourse';
 import AddCourse from '../../Pages/Teacher/Course/AddCourse';
 import UpdateCourse from '../../Pages/Teacher/Course/UpdateCourse';
+import TeacherProfile from '../../Pages/Teacher/Profile';
 
 export const BaseComponent = [
   // student paths
@@ -86,6 +87,11 @@ export const BaseComponent = [
   {
     Component: UpdateCourse,
     path: '/m/courses/:id',
+    useAuth: true,
+  },
+  {
+    Component: TeacherProfile,
+    path: '/m/profile',
     useAuth: true,
   },
 
