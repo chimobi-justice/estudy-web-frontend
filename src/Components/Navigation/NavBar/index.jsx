@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 
-import { UserProfileContext } from '../../context/userContext';
+import { UserProfileContext } from '../../../context/userContext';
 
 import { SearchOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Input } from 'antd';

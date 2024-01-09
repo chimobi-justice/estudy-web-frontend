@@ -1,5 +1,5 @@
-import AsideNav from "./AsideNav";
-import Navbar from "./NavBar";
+import AsideNav from '../Components/Navigation/AsideNav';
+import Navbar from '../Components/Navigation/NavBar';
 
 const Layout = ({ label, children }) => {
   return (
@@ -15,4 +15,4 @@ const Layout = ({ label, children }) => {
   );
 };
 
-export default Layout
+export default Layout;
