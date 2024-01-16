@@ -4,7 +4,7 @@ import { BaseComponent } from '../constants/baseComponent';
 
 import ErrorBoundary from '../ErrorBoundary';
 
-import PrivateRoute from './privateRoute';
+// import PrivateRoute from './privateRoute';
 
 import NotFound from '../Components/NotFound';
 import UserProfileContextProvider from '../context/userContext';
@@ -19,11 +19,11 @@ const Pages = () => {
               <Route
                 path={path}
                 element={
-                  <PrivateRoute>
+                  // <PrivateRoute>
+                  // </PrivateRoute>
                     <UserProfileContextProvider>
                       <Component />
                     </UserProfileContextProvider>
-                  </PrivateRoute>
                 }
               />
             </>

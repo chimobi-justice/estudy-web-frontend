@@ -23,6 +23,12 @@ const useAuth = () => {
         const title = data?.message;
         successNotification(title);
 
+        const accessToken = data?.access_token;
+
+        if (accessToken) {
+          axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        }
+
         if (data?.user_type === 'mentee') {
           localStorage.setItem('uc', data?.access_token);
           navigate('/s/dashboard');

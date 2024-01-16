@@ -5,10 +5,9 @@ import { baseURL } from './constants';
 const config = {
   baseURL: baseURL,
   headers: {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-    'Authorization': `Bearer ${localStorage.getItem('uc')}`,
   },
   withCredentials: true,
 };

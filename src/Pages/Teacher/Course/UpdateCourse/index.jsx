@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import useUpdateCourse from '../../../../hooks/useUpdateCourse';
 
 import { useFormik } from 'formik';
 import { courseValidateSchema } from '../../../../validations/course';
@@ -13,12 +15,9 @@ import Button from '../../../../Components/Button';
 
 import { FileInput, Select } from 'flowbite-react';
 
-import { getUpdateCourse, updateCourse } from '../../../../api/courses';
+import { getUpdateCourse } from '../../../../api/courses';
 import { axiosInstance } from '../../../../axiosInstance';
-import {
-  errorNotification,
-  successNotification,
-} from '../../../../helpers/notification';
+import { errorNotification } from '../../../../helpers/notification';
 
 const { TextArea } = Input;
 
@@ -27,7 +26,7 @@ const UpdateCourse = () => {
   const [videoPath, setVideoPath] = useState('');
   const [uploadingFile, setUploadingFile] = useState({});
 
-  const queryClient = useQueryClient();
+  const updateCourseMutation = useUpdateCourse();
 
   const { id } = useParams();
 
@@ -36,22 +35,8 @@ const UpdateCourse = () => {
     queryFn: () => getUpdateCourse(id),
   });
 
-  const updateMutation = useMutation({
-    mutationFn: updateCourse,
-    onSuccess: (data) => {
-      successNotification(data?.message);
-
-      queryClient.invalidateQueries({
-        queryKey: ['courses'],
-      });
-    },
-    onError: (error) => {
-      errorNotification(error?.message);
-    },
-  });
-
   const _handleUpdateCourse = (values) => {
-     const payload = {
+    const payload = {
       name: values.name,
       category: values.category,
       price: values.price,
@@ -60,21 +45,32 @@ const UpdateCourse = () => {
       video: videoPath || course_value?.data?.data?.video,
     };
 
-    updateMutation.mutate({
-      id: id, data: payload
+    updateCourseMutation.mutate({
+      id: id,
+      data: payload,
     });
   };
 
   const formik = useFormik({
     initialValues: {
-      name: course_value?.data?.data?.name ? course_value?.data?.data?.name : '',
-      price: course_value?.data?.data?.price ? course_value?.data?.data?.price : '',
-      category: course_value?.data?.data?.category ? course_value?.data?.data?.category : '',
+      name: course_value?.data?.data?.name
+        ? course_value?.data?.data?.name
+        : '',
+      price: course_value?.data?.data?.price
+        ? course_value?.data?.data?.price
+        : '',
+      category: course_value?.data?.data?.category
+        ? course_value?.data?.data?.category
+        : '',
       description: course_value?.data?.data?.description
         ? course_value?.data?.data?.description
         : '',
-      thumbnail: course_value?.data?.data?.thumbnail ? course_value?.data?.data?.thumbnail : '',
-      video: course_value?.data?.data?.thumbnail ? course_value?.data?.data?.video : '',
+      thumbnail: course_value?.data?.data?.thumbnail
+        ? course_value?.data?.data?.thumbnail
+        : '',
+      video: course_value?.data?.data?.thumbnail
+        ? course_value?.data?.data?.video
+        : '',
     },
     onSubmit: _handleUpdateCourse,
     validationSchema: courseValidateSchema,
