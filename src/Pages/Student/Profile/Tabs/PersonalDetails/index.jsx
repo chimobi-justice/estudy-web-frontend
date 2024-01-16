@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { UserProfileContext } from '../../../../../context/userContext';
+
+import useCreateProfile from '../../../../../hooks/useCreateProfile';
 
 import Button from '../../../../../Components/Button';
 
@@ -11,11 +11,7 @@ import { useFormik } from 'formik';
 import { validateSchema } from '../../../../../validations/studentProfile';
 
 import { Input } from 'antd';
-import { userProfileAll } from '../../../../../api/users';
-import {
-  errorNotification,
-  successNotification,
-} from '../../../../../helpers/notification';
+
 import UploadAvatar from '../../../../../Components/UploadAvatar';
 
 const { TextArea } = Input;
@@ -23,21 +19,7 @@ const { TextArea } = Input;
 const PersonalDetails = () => {
   const { user } = useContext(UserProfileContext);
 
-  const queryClient = useQueryClient();
-
-  const updateProfileMutation = useMutation({
-    mutationFn: userProfileAll,
-    onSuccess: (data) => {
-      successNotification(data?.message);
-
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-    },
-    onError: (error) => {
-      errorNotification(error?.message);
-    },
-  });
+  const updateProfileMutation = useCreateProfile();
 
   const _handleStudentProfile = (values) => {
     updateProfileMutation.mutate({

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useCreateCourse from '../../../../hooks/useCreateCourse';
 
 import { useFormik } from 'formik';
 import { courseValidateSchema } from '../../../../validations/course';
@@ -11,12 +11,9 @@ import Button from '../../../../Components/Button';
 
 import { FileInput, Select } from 'flowbite-react';
 
-import { createCourse } from '../../../../api/courses';
 import { axiosInstance } from '../../../../axiosInstance';
-import {
-  errorNotification,
-  successNotification,
-} from '../../../../helpers/notification';
+
+import { errorNotification } from '../../../../helpers/notification';
 
 const { TextArea } = Input;
 
@@ -25,24 +22,10 @@ const AddCourse = () => {
   const [videoPath, setVideoPath] = useState('');
   const [uploadingFile, setUploadingFile] = useState({});
 
-  const queryClient = useQueryClient();
-
-  const createMutation = useMutation({
-    mutationFn: createCourse,
-    onSuccess: (data) => {
-      successNotification(data?.data?.message);
-
-      queryClient.invalidateQueries({
-        queryKey: ['courses'],
-      });
-    },
-    onError: (error) => {
-      errorNotification(error?.data?.message);
-    },
-  });
+  const createCourseMutation = useCreateCourse();
 
   const _handleCreateCourse = (values) => {
-    createMutation.mutate({
+    createCourseMutation.mutate({
       name: values.name,
       category: values.category,
       price: values.price,

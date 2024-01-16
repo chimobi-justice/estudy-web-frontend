@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import useCourses from '../../hooks/useCourses';
+import useCreateEnrollCourse from '../../hooks/useCreateEnrollCourse';
 
 import Layout from '../../Layouts';
-
-import { studentAllCourse, studentEnrollCourse } from '../../api/courses';
 
 import {
   AppstoreOutlined,
@@ -18,34 +17,15 @@ import {
   DashbaordCourseHolderImage,
 } from './styled.index';
 import Skeleton from '../../Components/Skeleton';
-import {
-  errorNotification,
-  successNotification,
-} from '../../helpers/notification';
+
 import Button from '../../Components/Button';
 
 const { Option } = Select;
 
 const StudentDashboard = () => {
-  const queryClient = useQueryClient();
+  const { data: getAllCourses, isLoading } = useCourses();
 
-  const { data: getAllCourses, isLoading } = useQuery({
-    queryKey: ['courses'],
-    queryFn: studentAllCourse,
-  });
-
-  const enrollCourseMutation = useMutation({
-    mutationFn: studentEnrollCourse,
-    onSuccess: (data) => {
-      successNotification(data?.data?.message);
-      queryClient.invalidateQueries({
-        queryKey: ['courses'],
-      });
-    },
-    onError: (error) => {
-      errorNotification(error?.response?.data?.message);
-    },
-  });
+  const enrollCourseMutation = useCreateEnrollCourse();
 
   return (
     <Layout label="Dashboard">
@@ -119,9 +99,7 @@ const StudentDashboard = () => {
               <div className="flex items-center my-2">
                 <div>
                   {course?.profile?.avatar ? (
-                    <DashbaordCourseHolderImage
-                      src={course?.profile?.avatar}
-                    />
+                    <DashbaordCourseHolderImage src={course?.profile?.avatar} />
                   ) : (
                     <Avatar
                       shape="circle"

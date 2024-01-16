@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { UserProfileContext } from '../../../context/userContext';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useDeleteAccount from '../../../hooks/useDeleteAccount';
 
 import Layout from '../../../Layouts';
 
@@ -21,30 +21,12 @@ import {
 import Button from '../../../Components/Button';
 import { Modal } from 'flowbite-react';
 import PersonalDetails from './PersonalDetails';
-import { deleteAccount } from '../../../api/users';
-import {
-  errorNotification,
-  successNotification,
-} from '../../../helpers/notification';
 
 const TeacherProfile = () => {
   const { user } = useContext(UserProfileContext);
   const [openModal, setOpenModal] = useState(false);
 
-  const queryClient = useQueryClient();
-
-  const deleteAccountMutation = useMutation({
-    mutationFn: deleteAccount,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-      successNotification(data?.message);
-    },
-    onError: (error) => {
-      errorNotification(error?.response?.data?.message);
-    },
-  });
+  const deleteAccountMutation = useDeleteAccount();
 
   return (
     <Layout label="Profile">

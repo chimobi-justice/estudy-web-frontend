@@ -50,6 +50,12 @@ const updateCourse = async ({ id, data }) => {
 const getUpdateCourse = async (id) => {
   return await axiosInstance.get(`courses/m/${id}`);
 };
+
+const getMentorEnrolledStudents = async (page = 1) => {
+  const response = await axiosInstance.get(`courses/m/enrolled-students?page=${page}`);
+  return response.data;
+};
+
 // end mentor
 
 export {
@@ -64,4 +70,5 @@ export {
   studentEnrollCourse,
   getEnrollCourses,
   studentUnEnrollCourse,
+  getMentorEnrolledStudents,
 };

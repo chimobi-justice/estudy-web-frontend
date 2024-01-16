@@ -8,6 +8,7 @@ Estudy is an e-learning platform to choose learning fields from different catego
 -   TailwindCss
 -   AntDesign
 -   Styled-Component
+    React-Query
 
 ## Usage
 

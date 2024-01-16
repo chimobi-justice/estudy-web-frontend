@@ -2,13 +2,11 @@ import { useContext, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useDeleteAccount from '../../../hooks/useDeleteAccount';
 
 import Layout from '../../../Layouts';
 
 import { UserProfileContext } from '../../../context/userContext';
-
-import { deleteAccount } from '../../../api/users';
 
 import PersonalDetails from './Tabs/PersonalDetails';
 
@@ -27,7 +25,6 @@ import {
 } from '@ant-design/icons';
 import { Modal } from 'flowbite-react';
 import Button from '../../../Components/Button';
-import { errorNotification, successNotification } from '../../../helpers/notification';
 
 const { TabPane } = Tabs;
 
@@ -35,20 +32,7 @@ const StudentProfile = () => {
   const { user } = useContext(UserProfileContext);
   const [openModal, setOpenModal] = useState(false);
 
-  const queryClient = useQueryClient();
-
-  const deleteAccountMutation = useMutation({
-    mutationFn: deleteAccount,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-      successNotification(data?.message)
-    },
-    onError: (error) => {
-      errorNotification(error?.response?.data?.message)
-    }
-  });
+  const deleteAccountMutation = useDeleteAccount();
 
   return (
     <Layout label="Profile">

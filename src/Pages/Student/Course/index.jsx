@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import useCreateUnEnrollCourse from '../../../hooks/useCreateUnEnrollCourse';
+import useCoursesEnroll from '../../../hooks/useCoursesEnroll';
 
 import Layout from '../../../Layouts';
-
-import { getEnrollCourses, studentUnEnrollCourse } from '../../../api/courses';
 
 import EmptyState from '../../../assets/images/No_data.png';
 
@@ -21,10 +20,6 @@ import { CourseIconImage } from './styled.Course';
 import Skeleton from '../../../Components/Skeleton';
 import { Modal } from 'flowbite-react';
 import Button from '../../../Components/Button';
-import {
-  errorNotification,
-  successNotification,
-} from '../../../helpers/notification';
 
 const { Option } = Select;
 
@@ -32,25 +27,9 @@ const StudentCourse = () => {
   const [openModal, setOpenModal] = useState(false);
   const [idValue, setIdValue] = useState(null);
 
-  const queryClient = useQueryClient();
+  const { data: getCourseEnrolled, isLoading } = useCoursesEnroll();
 
-  const { data: getCourseEnrolled, isLoading } = useQuery({
-    queryKey: ['courses-enroll'],
-    queryFn: getEnrollCourses,
-  });
-
-  const unEnrollCourseMutation = useMutation({
-    mutationFn: studentUnEnrollCourse,
-    onSuccess: (data) => {
-      successNotification(data?.data?.message);
-      queryClient.invalidateQueries({
-        queryKey: ['courses-enroll'],
-      });
-    },
-    onError: (error) => {
-      errorNotification(error?.response?.data?.message);
-    },
-  });
+  const unEnrollCourseMutation = useCreateUnEnrollCourse();
 
   return (
     <Layout label="My Courses">
