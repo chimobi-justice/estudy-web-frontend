@@ -33,7 +33,7 @@ const StudentCourse = () => {
 
   return (
     <Layout label="My Courses">
-      <div className="flex justify-end items-center my-3">
+      <div className="flex justify-center lg:justify-end items-center my-3">
         <div className="bg-white pt-1 pl-2 pr-2 pb-2 shadow-sm">
           <CaretDownOutlined />
         </div>
@@ -65,15 +65,15 @@ const StudentCourse = () => {
 
       {isLoading && <Skeleton />}
 
-      <div className="grid grid-cols-4 gap-8 mb-3">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 p-2">
         {getCourseEnrolled &&
           getCourseEnrolled?.data?.data?.map((course) => (
             <Link
               to={`/s/course/${course?.course_id}/overview`}
               key={course?.id}
-              className="relative"
+              className="relative shadow-lg bg-white mb-2 border"
             >
-              <div className="bg-white shadow-lg p-4">
+              <div className="p-4">
                 <div className="flex justify-between items-center my-2">
                   <div>
                     <CourseIconImage src={course?.thumbnail} />

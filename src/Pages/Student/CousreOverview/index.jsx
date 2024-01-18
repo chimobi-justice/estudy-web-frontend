@@ -31,8 +31,8 @@ const StudentCourseOverview = () => {
 
   return (
     <Layout label="My Course">
-      <div className="flex justify-between">
-        <div className="w-9/12 h-auto mr-3 p-3">
+      <div className="flex flex-col lg:flex-row lg:justify-between">
+        <div className="w-full lg:w-9/12 h-auto mr-3 p-3">
           <div className="h-auto rounded-lg shadow-sm">
             <ReactPlayer url={getCourseOverview?.data?.data?.video} controls width="100" height="100"/>
           </div>
@@ -69,7 +69,7 @@ const StudentCourseOverview = () => {
             </TabPane>
           </Tabs>
         </div>
-        <div className="bg-white shadow-lg rounded-2xl w-1/4 h-auto ml-3 p-3">
+        <div className="bg-white shadow-lg rounded-2xl w-11/12 lg:w-1/4 h-auto ml-3 p-3">
           <h1 className="text-base font-bold text-gray-600 mb-0">
             Course Content
           </h1>

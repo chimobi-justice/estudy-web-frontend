@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,8 +14,8 @@ export const AsideLeftWrapper = styled.div`
   border-radius: 9px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
-  overflow-Y: scroll;
-  overflow-X: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
 export const AsideRightWrapper = styled.div`
@@ -29,20 +29,25 @@ export const AsideRightContainer = styled.div`
 
 export const AsideRightHeader = styled.header`
   position: sticky;
-  top: 40px;
+  top: 55px;
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
   border-radius: 9px;
   background: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  z-index: 99999;
+  z-index: 43;
 `;
 
 export const StudentChatBoard = styled.div`
-  height: 400px;
-  overflow-Y: scroll;
-  overflow-X: hidden;
+  height: 510px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 10px 0px 10px;
+
+  @media screen and (max-width: 768px) {
+    height: 310px;
+  }
 `;
 
 export const AsideRightFooter = styled.footer`
@@ -54,5 +59,5 @@ export const AsideRightFooter = styled.footer`
   padding: 10px;
   border-radius: 9px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  z-index: 99999;
+  z-index: 43;
 `;

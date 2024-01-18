@@ -31,9 +31,9 @@ const TeacherProfile = () => {
   return (
     <Layout label="Profile">
       <>
-        <div className="flex justify-between">
-          <div className="w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
-            <div className="w-7/12 m-auto text-center my-7">
+        <div className="flex flex-col lg:flex-row lg:justify-between">
+          <div className="w-full lg:w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
+            <div className="w-7/12 m-auto text-center my-4 lg:my-7">
               {user?.data?.data?.avatar && (
                 <Avatar
                   shape="circle"
@@ -104,7 +104,7 @@ const TeacherProfile = () => {
               </p>
             </div>
           </div>
-          <div className="w-3/4 p-4 bg-white shadow-lg rounded-2xl">
+          <div className="w-full lg:w-3/4 p-4 bg-white shadow-lg rounded-2xl">
             <PersonalDetails />
           </div>
         </div>

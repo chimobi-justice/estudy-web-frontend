@@ -5,21 +5,21 @@ import useCreateCourse from '../../../../hooks/useCreateCourse';
 import { useFormik } from 'formik';
 import { courseValidateSchema } from '../../../../validations/course';
 
-import { Input, Progress } from 'antd';
+import { Input, Progress, message } from 'antd';
 import Layout from '../../../../Layouts';
 import Button from '../../../../Components/Button';
 
 import { FileInput, Select } from 'flowbite-react';
 
-import { axiosInstance } from '../../../../axiosInstance';
-
 import { errorNotification } from '../../../../helpers/notification';
+
+import { uploadCourseFiles } from '../../../../helpers/uploadCourseFile';
 
 const { TextArea } = Input;
 
 const AddCourse = () => {
   const [imagePath, setImagePath] = useState('');
-  const [videoPath, setVideoPath] = useState('');
+  const [videoPath, setVideoPath] = useState([]);
   const [uploadingFile, setUploadingFile] = useState({});
 
   const createCourseMutation = useCreateCourse();
@@ -53,46 +53,48 @@ const AddCourse = () => {
   const handleFileUpload = async (e, fileType) => {
     e.preventDefault();
 
-    const filename = e.target.files[0].name;
-
+    const files = e.target.files;
     const formDataKey = fileType === 'thumbnail' ? 'thumbnail' : 'video';
-
     const endpoint = fileType === 'video' ? 'video' : 'thumbnail';
 
-    const form = new FormData();
-    form.append(formDataKey, e.target.files[0]);
+    if (files) {
+      const fileSize = files[0].size;
+      const maxFileSizeInBytes =
+        fileType === 'thumbnail' ? 2 * 1024 * 1024 : 8 * 1024 * 1024;
 
-    try {
-      const res = await axiosInstance.post(`/courses/m/${endpoint}`, form, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
+      if (fileSize > maxFileSizeInBytes) {
+        message.error(
+          `File size exceeds the limit (${
+            maxFileSizeInBytes / (1024 * 1024)
+          } MB). Please select a smaller file.`
+        );
+        e.target.value = null;
+      } else {
+        try {
+          const responseData = await uploadCourseFiles(
+            files,
+            formDataKey,
+            endpoint,
+            setUploadingFile
           );
-          setUploadingFile({ name: filename, status: percentCompleted });
-        },
-      });
 
-      if (res) {
-        if (res?.data?.thumbnail) {
-          setImagePath(res?.data?.thumbnail);
-        }
-
-        if (res?.data?.video) {
-          setVideoPath(res?.data?.video);
+          if (responseData) {
+            if (formDataKey === 'thumbnail') {
+              setImagePath(responseData.thumbnail);
+            } else if (formDataKey === 'video') {
+              setVideoPath(responseData.videos);
+            }
+          }
+        } catch (error) {
+          errorNotification(error);
         }
       }
-    } catch (e) {
-      errorNotification('Something went wrong');
     }
   };
 
   return (
     <Layout label="Create Course">
-      <div className="mt-2 w-6/12 m-auto p-2">
+      <div className="mt-2 w-full lg:w-6/12 m-auto p-2">
         <form encType="multipart/form-data" onSubmit={handleSubmit}>
           <div>
             <div className="w-full mb-2">
@@ -171,11 +173,13 @@ const AddCourse = () => {
                 Thumbnail <span className="text-red-500">*</span>
               </label>
               <FileInput onChange={(e) => handleFileUpload(e, 'thumbnail')} />
-              {imagePath && uploadingFile && (
-                <div>
-                  <Progress percent={uploadingFile?.status} />
-                </div>
-              )}
+              {imagePath &&
+                uploadingFile &&
+                uploadingFile?.dataKey === 'thumbnail' && (
+                  <div>
+                    <Progress percent={uploadingFile?.status} />
+                  </div>
+                )}
             </div>
 
             <div className="w-full mb-2">
@@ -186,11 +190,13 @@ const AddCourse = () => {
                 multiple
                 onChange={(e) => handleFileUpload(e, 'video')}
               />
-              {videoPath && uploadingFile && (
-                <div>
-                  <Progress percent={uploadingFile?.status} />
-                </div>
-              )}
+              {videoPath &&
+                uploadingFile &&
+                uploadingFile?.dataKey === 'video' && (
+                  <div>
+                    <Progress percent={uploadingFile?.status} />
+                  </div>
+                )}
             </div>
 
             <div className="w-full mt-4">

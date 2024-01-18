@@ -37,8 +37,8 @@ const StudentProfile = () => {
   return (
     <Layout label="Profile">
       <>
-        <div className="flex justify-between">
-          <div className="w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
+        <div className="flex flex-col lg:flex-row lg:justify-between">
+          <div className="w-full lg:w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
             <div className="w-7/12 m-auto text-center my-7">
               {user?.data?.data?.avatar && (
                 <Avatar
@@ -81,18 +81,18 @@ const StudentProfile = () => {
               <h3 className="text-bold text-base text-gray-700 mb-4">
                 Last Achievement
               </h3>
-              <div className="flex justify-between">
+              <div className="flex justify-between mx-auto w-11/12">
                 <div>
-                  <img src={medal} alt="" className="w-9/12" />
+                  <img src={medal} alt="" className="w-6/12 lg:w-9/12" />
                 </div>
                 <div>
-                  <img src={trophy} alt="" className="w-9/12" />
+                  <img src={trophy} alt="" className="w-6/12 lg:w-9/12" />
                 </div>
                 <div>
-                  <img src={quality} alt="" className="w-9/12" />
+                  <img src={quality} alt="" className="w-6/12 lg:w-9/12" />
                 </div>
                 <div>
-                  <img src={secTrophy} alt="" className="w-9/12" />
+                  <img src={secTrophy} alt="" className="w-6/12 lg:w-9/12" />
                 </div>
               </div>
             </div>
@@ -134,7 +134,7 @@ const StudentProfile = () => {
               </p>
             </div>
           </div>
-          <div className="w-3/4 p-4 bg-white shadow-lg rounded-2xl">
+          <div className="w-full lg:w-3/4 p-4 bg-white shadow-lg rounded-2xl">
             <Tabs defaultActiveKey="1">
               <TabPane tab="Personal Details" key="1">
                 <PersonalDetails />

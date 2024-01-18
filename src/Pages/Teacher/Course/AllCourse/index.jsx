@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+
+import useDeleteCourse from '../../../../hooks/useDeleteCourse';
 
 import { Dropdown, Table, Modal } from 'flowbite-react';
 
-import { getMentorCourses, deleteCourse } from '../../../../api/courses';
+import { getMentorCourses } from '../../../../api/courses';
 
 import EmptyState from '../../../../assets/images/No_data.png';
 
@@ -28,26 +30,27 @@ const AllCourse = () => {
   const [openModal, setOpenModal] = useState(false);
   const [checkValue, setCheckValue] = useState(null);
 
-  const queryClient = useQueryClient();
-
   const { data, isLoading } = useQuery({
     queryKey: ['courses'],
     queryFn: getMentorCourses,
   });
 
-  const deleteCourseMutation = useMutation({
-    mutationFn: deleteCourse,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['courses'],
-      });
-    },
-  });
+  const deleteCourseMutation = useDeleteCourse();
 
   return (
     <Layout label="My Courses">
       <>
-        <div className="flex justify-end items-center my-3">
+        <div className="ml-2 block lg:hidden">
+          <Link
+            to="/m/courses/create"
+            className="text-white text-sm hover:text-white py-3 px-3 rounded"
+            style={{ background: '#11a789' }}
+          >
+            Add Course
+          </Link>
+        </div>
+
+        <div className="flex justify-center lg:justify-end items-center my-3">
           <div className="bg-white pt-1 pl-2 pr-2 pb-2 shadow-sm">
             <CaretDownOutlined />
           </div>
@@ -75,10 +78,10 @@ const AllCourse = () => {
           <div className="bg-green-300 pt-1 pl-2 pr-2 pb-2 shadow-sm">
             <AppstoreOutlined />
           </div>
-          <div className="ml-2">
+          <div className="ml-2 hidden lg:block">
             <Link
               to="/m/courses/create"
-              className="text-white hover:text-white font-bold py-3 px-3 rounded"
+              className="text-white hover:text-white py-3 px-3 rounded"
               style={{ background: '#11a789' }}
             >
               Add Course
@@ -93,7 +96,7 @@ const AllCourse = () => {
             <Table>
               <Table.Head>
                 <Table.HeadCell>Course Name</Table.HeadCell>
-                <Table.HeadCell>Video</Table.HeadCell>
+                <Table.HeadCell>Videos</Table.HeadCell>
                 <Table.HeadCell>Price</Table.HeadCell>
                 <Table.HeadCell>Day Created</Table.HeadCell>
                 <Table.HeadCell>Action</Table.HeadCell>

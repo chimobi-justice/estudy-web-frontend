@@ -109,8 +109,8 @@ const GetTeacherStudent = () => {
   return (
     <Layout label="Students">
       <>
-        <div className="flex justify-betwenn">
-          <div className="w-3/5 p-4 bg-white shadow-lg rounded-2xl mr-4">
+        <div className="flex flex-col lg:flex-row lg:justify-between">
+          <div className="w-full lg:w-3/5 p-4 bg-white shadow-lg rounded-2xl mr-4">
             <div className="flex justify-between">
               <div>
                 <h4 className="text-sm text-gray-500 font-bold">
@@ -155,8 +155,10 @@ const GetTeacherStudent = () => {
               </ResponsiveContainer>
             </div>
           </div>
-          <div className="w-2/5 p-4 bg-white shadow-lg rounded-xl">
-            <div className="font-bold text-lg text-gray-500">Student Geolocation Rate</div>
+          <div className="w-full lg:w-2/5 p-4 bg-white shadow-lg rounded-xl">
+            <div className="font-bold text-lg text-gray-500">
+              Student Geolocation Rate
+            </div>
             <div className="h-5/6">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={400} height={400}>
@@ -181,10 +183,30 @@ const GetTeacherStudent = () => {
               </ResponsiveContainer>
             </div>
             <div className="flex overflow-x-auto sm:justify-center text-xs text-gray-400 items-center">
-              <span><span className="text-xl" style={{color: '#0088FE'}}>&bull;</span>Africa</span>
-              <span className="ml-1"><span className="text-xl" style={{color:'#00C49F'}}>&bull;</span>Europe</span>
-              <span className="mr-1 ml-1"><span className="text-xl" style={{color:'#FFBB28'}}>&bull;</span>America</span>
-              <span><span className="text-xl" style={{color:'#FF8042'}}>&bull;</span>Asia</span>
+              <span>
+                <span className="text-xl" style={{ color: '#0088FE' }}>
+                  &bull;
+                </span>
+                Africa
+              </span>
+              <span className="ml-1">
+                <span className="text-xl" style={{ color: '#00C49F' }}>
+                  &bull;
+                </span>
+                Europe
+              </span>
+              <span className="mr-1 ml-1">
+                <span className="text-xl" style={{ color: '#FFBB28' }}>
+                  &bull;
+                </span>
+                America
+              </span>
+              <span>
+                <span className="text-xl" style={{ color: '#FF8042' }}>
+                  &bull;
+                </span>
+                Asia
+              </span>
             </div>
           </div>
         </div>
