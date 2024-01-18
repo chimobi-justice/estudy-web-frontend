@@ -56,8 +56,8 @@ const PersonalDetails = () => {
       <UploadAvatar />
 
       <form onSubmit={handleSubmit}>
-        <div className="flex justify-between mb-6">
-          <div className="w-6/12 mr-1">
+        <div className="flex flex-col lg:flex-row lg:justify-between mb-6">
+          <div className="w-full lg:w-6/12 mr-0 lg:mr-1 mb-4 lg:mb-0">
             <Input
               type="text"
               placeholder="FullName"
@@ -71,7 +71,7 @@ const PersonalDetails = () => {
               <p className="text-red-300 mb-0">{errors.fullname}</p>
             )}
           </div>
-          <div className="w-6/12 ml-1">
+          <div className="w-full lg:w-6/12 ml-0 lg:ml-1">
             <Input
               type="email"
               placeholder="Email Address"
@@ -101,8 +101,8 @@ const PersonalDetails = () => {
             <p className="text-red-300 mb-0">{errors.address}</p>
           )}
         </div>
-        <div className="flex justify-between mb-6">
-          <div className="w-6/12 mr-1">
+        <div className="flex flex-col lg:flex-row lg:justify-between mb-6">
+          <div className="w-full lg:w-6/12 mr-0 lg:mr-1 mb-4 lg:mb-0">
             <Input
               type="text"
               placeholder="City"
@@ -114,7 +114,7 @@ const PersonalDetails = () => {
             />
             {errors.city && <p className="text-red-300 mb-0">{errors.city}</p>}
           </div>
-          <div className="w-6/12 ml-1">
+          <div className="w-full lg:w-6/12 ml-0 lg:ml-1">
             <Input
               type="text"
               placeholder="State/Province"
@@ -129,8 +129,8 @@ const PersonalDetails = () => {
             )}
           </div>
         </div>
-        <div className="flex justify-between mb-3">
-          <div className="w-6/12 mr-1">
+        <div className="flex flex-col lg:flex-row lg:justify-between mb-3">
+          <div className="w-full lg:w-6/12 mr-0 lg:mr-1 mb-4 lg:mb-0">
             <Input
               type="text"
               placeholder="Zip"
@@ -142,7 +142,7 @@ const PersonalDetails = () => {
             />
             {errors.zip && <p className="text-red-300 mb-0">{errors.zip}</p>}
           </div>
-          <div className="w-6/12 ml-1">
+          <div className="w-full lg:w-6/12 ml-0 lg:ml-1">
             <Input
               type="text"
               placeholder="Country"

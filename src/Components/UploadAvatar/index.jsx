@@ -1,36 +1,18 @@
 import { useContext } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import useProfileAvatarMutation from '../../hooks/useProfileAvatarMutation';
 import { UserProfileContext } from '../../context/userContext';
 import { Avatar, message } from 'antd';
 import { CameraFilled } from '@ant-design/icons';
 import { axiosInstance } from '../../axiosInstance';
 
-import {
-  errorNotification,
-  successNotification,
-} from '../../helpers/notification';
-
-import { userProfile } from '../../api/users';
+import { errorNotification } from '../../helpers/notification';
 
 import DefaultUser from '../../assets/images/default_user.png';
 
 const UploadAvatar = () => {
   const { user } = useContext(UserProfileContext);
 
-  const queryClient = useQueryClient();
-
-  const {
-    mutate: updateProfileAvatarMutation,
-  } = useMutation({
-    mutationFn: userProfile,
-    onSuccess: (data) => {
-      successNotification(data?.message);
-
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-      });
-    },
-  });
+  const { mutate: updateProfileAvatarMutation } = useProfileAvatarMutation();
 
   const handleFileUpload = async (e, fileType) => {
     e.preventDefault();
@@ -75,7 +57,7 @@ const UploadAvatar = () => {
   };
 
   return (
-    <div className="text-center my-10 relative">
+    <div className="text-center my-8 relative">
       {user?.data?.data?.avatar && (
         <>
           <Avatar

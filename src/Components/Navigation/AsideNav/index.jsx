@@ -5,7 +5,6 @@ import Button from '../../Button';
 
 import { AsideNavWrapper } from './styled.AsideNav';
 import useAuth from '../../../auth';
-import { successNotification } from '../../../helpers/notification';
 
 import { STUDENT_ASIDE_NAV } from '../../../constants/studentAsideNav';
 import { TEACHER_ASIDE_NAV } from '../../../constants/teacherAsideNav';
@@ -21,7 +20,6 @@ const AsideNav = () => {
     signOut();
     localStorage.removeItem('uc');
     navigate('/login');
-    successNotification('logged out successfully');
   };
 
   return (
