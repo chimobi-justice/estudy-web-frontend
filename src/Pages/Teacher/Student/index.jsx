@@ -134,7 +134,7 @@ const GetTeacherStudent = () => {
               </div>
             </div>
 
-            <div className="h-5/6">
+            <div className="h-full lg:h-5/6">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   width={500}
@@ -159,7 +159,7 @@ const GetTeacherStudent = () => {
             <div className="font-bold text-lg text-gray-500">
               Student Geolocation Rate
             </div>
-            <div className="h-5/6">
+            <div className="h-full lg:h-5/6">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart width={400} height={400}>
                   <Pie

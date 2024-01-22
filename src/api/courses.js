@@ -9,7 +9,8 @@ const allCourse = async () => {
 // students
 
 const getSingleStudentCourseOverview = async (id) => {
-  return await axiosInstance.get(`courses/s/${id}`);
+  const response = await axiosInstance.get(`courses/s/${id}`);
+  return response.data; 
 };
 
 const studentEnrollCourse = async (id) => {

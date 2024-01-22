@@ -148,22 +148,12 @@ const AllCourse = () => {
 
         {data && data?.data?.data?.length === 0 && (
           <>
-            <div
-              style={{
-                width: '50%',
-                margin: '5em auto',
-                textAlign: 'center',
-              }}
-            >
-              <div style={{ width: '60%', margin: '0px auto' }}>
+            <div className="w-ful lg:w-2/4 mx-auto pb-5 text-center">
+              <div className="mx-auto w-11/12 lg:w-3/5">
                 <img
                   src={EmptyState}
                   alt=""
-                  style={{
-                    width: '300px',
-                    height: '300px',
-                    display: 'block',
-                  }}
+                  style={{ width: '300px', height: '300px', display: 'block' }}
                 />
               </div>
               <h2>
@@ -189,7 +179,6 @@ const AllCourse = () => {
               </h3>
               <div className="flex justify-center gap-4">
                 <Button
-                  color="failure"
                   label="Yes, I'm sure"
                   bgColor="primary"
                   type="button"

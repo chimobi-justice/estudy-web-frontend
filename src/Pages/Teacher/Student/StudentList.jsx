@@ -104,9 +104,9 @@ const StudentList = () => {
       {response && response?.length === 0 && (
         <>
           <div
-            style={{ width: '50%', margin: '2em auto', paddingBottom: '5px', textAlign: 'center' }}
+            className="w-ful lg:w-2/4 mx-auto pb-5 text-center"
           >
-            <div style={{ width: '60%', margin: '0px auto' }}>
+            <div className="mx-auto w-11/12 lg:w-3/5">
               <img
                 src={EmptyState}
                 alt=""
