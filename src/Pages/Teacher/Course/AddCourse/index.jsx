@@ -9,7 +9,7 @@ import { Input, Progress, message } from 'antd';
 import Layout from '../../../../Layouts';
 import Button from '../../../../Components/Button';
 
-import { FileInput, Select } from 'flowbite-react';
+import { FileInput, Modal, Select } from 'flowbite-react';
 
 import { errorNotification } from '../../../../helpers/notification';
 
@@ -21,6 +21,8 @@ const AddCourse = () => {
   const [imagePath, setImagePath] = useState('');
   const [videoPath, setVideoPath] = useState([]);
   const [uploadingFile, setUploadingFile] = useState({});
+  const [openModal, setOpenModal] = useState(false);
+  const [courseTitle, setCourseTitle] = useState([]);
 
   const createCourseMutation = useCreateCourse();
 
@@ -32,6 +34,7 @@ const AddCourse = () => {
       description: values.description,
       thumbnail: imagePath,
       video: videoPath,
+      title: courseTitle,
     });
   };
 
@@ -43,6 +46,7 @@ const AddCourse = () => {
       description: '',
       thumbnail: '',
       video: '',
+      title: '',
     },
     onSubmit: _handleCreateCourse,
     validationSchema: courseValidateSchema,
@@ -61,6 +65,16 @@ const AddCourse = () => {
       const fileSize = files[0].size;
       const maxFileSizeInBytes =
         fileType === 'thumbnail' ? 2 * 1024 * 1024 : 8 * 1024 * 1024;
+
+      const allowedVideoTypes = ['video/avi', 'video/mpeg', 'video/mp4'];
+
+      if (
+        formDataKey === 'video' &&
+        !allowedVideoTypes.includes(files[0].type)
+      ) {
+        message.error('The video field must be a file of type: avi, mpeg, mp4');
+        e.target.value = null;
+      }
 
       if (fileSize > maxFileSizeInBytes) {
         message.error(
@@ -81,8 +95,9 @@ const AddCourse = () => {
           if (responseData) {
             if (formDataKey === 'thumbnail') {
               setImagePath(responseData.thumbnail);
-            } else if (formDataKey === 'video') {
-              setVideoPath(responseData.videos);
+            }
+            if (formDataKey === 'video') {
+              setVideoPath([...videoPath, responseData.videos]);
             }
           }
         } catch (error) {
@@ -182,21 +197,13 @@ const AddCourse = () => {
                 )}
             </div>
 
-            <div className="w-full mb-2">
-              <label htmlFor="">
-                Course Video <span className="text-red-500">*</span>
-              </label>
-              <FileInput
-                multiple
-                onChange={(e) => handleFileUpload(e, 'video')}
+            <div>
+              <Button
+                label="Add Video"
+                type="button"
+                bgColor="secondary"
+                handleClick={() => setOpenModal(true)}
               />
-              {videoPath &&
-                uploadingFile &&
-                uploadingFile?.dataKey === 'video' && (
-                  <div>
-                    <Progress percent={uploadingFile?.status} />
-                  </div>
-                )}
             </div>
 
             <div className="w-full mt-4">
@@ -214,6 +221,65 @@ const AddCourse = () => {
               />
             </div>
           </div>
+
+          <Modal
+            show={openModal}
+            size="md"
+            onClose={() => setOpenModal(false)}
+            popup
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="">
+                <div className="w-full mb-2">
+                  <label htmlFor="">
+                    Title <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="course intro"
+                    name="title"
+                    value={values.title}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    style={{ padding: '6px', marginTop: '5px' }}
+                  />
+                  {errors.title && (
+                    <p className="text-red-300 mb-0">{errors.title}</p>
+                  )}
+                </div>
+
+                <div className="w-full mb-2">
+                  <label htmlFor="">
+                    Course Video <span className="text-red-500">*</span>
+                  </label>
+                  <FileInput onChange={(e) => handleFileUpload(e, 'video')} />
+                  {videoPath &&
+                    uploadingFile &&
+                    uploadingFile?.dataKey === 'video' && (
+                      <div>
+                        <Progress percent={uploadingFile?.status} />
+                      </div>
+                    )}
+                </div>
+                <div>
+                  <Button
+                    label="Add Video"
+                    bgColor="primary"
+                    type="button"
+                    disabled={!values.title || !videoPath.length === 0}
+                    handleClick={() => {
+                      if (values.title && videoPath.length > 0) {
+                        setCourseTitle([...courseTitle, values.title]);
+                        message.success('Added successfully');
+                        setOpenModal(false)
+                      }
+                    }}
+                  />
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal>
         </form>
       </div>
     </Layout>

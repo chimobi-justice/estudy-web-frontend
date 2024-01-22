@@ -1,19 +1,10 @@
 import { useState } from 'react';
 
-import { STUDENT_COURSE_OVERVIEW } from '../../../constants/studentCourseOverview';
-
-import {
-  CheckCircleTwoTone,
-  DownCircleOutlined,
-  FieldTimeOutlined,
-  FileOutlined,
-} from '@ant-design/icons';
-
 import { Timeline } from 'antd';
 
 const { Item } = Timeline;
 
-const CourseOverviewModule = () => {
+const CourseOverviewModule = ({ title, numberIndex, handleClick }) => {
   const [courseOverviewModule, setCourseOverviewModule] = useState(false);
   const [activeModule, setActiveModule] = useState(0);
 
@@ -27,52 +18,35 @@ const CourseOverviewModule = () => {
 
   return (
     <>
-      {STUDENT_COURSE_OVERVIEW.map((overview) => (
-        <div key={overview.id}>
-          <div
-            className="flex justify-between items-center cursor-pointer mb-3"
-            onClick={() => {
-              // eslint-disable-next-line no-lone-blocks
-              {
-                handleCourseOverViewModule();
-              }
-              // eslint-disable-next-line no-lone-blocks
-              {
-                handleSingleActiveModule(overview.id);
-              }
-            }}
-          >
-            <div>
-              <p className="mb-0 text-xs font-bold text-gray-500">
-                {overview.module}
-              </p>
-              <p className="mb-0 text-xs font-medium text-gray-500">
-                Introduction
-              </p>
-            </div>
-
-            <p className="flex items-center mb-0 text-xs font-bold text-gray-500">
-              <FileOutlined className="mr-1" /> {overview.lectureCount}
-              <FieldTimeOutlined className="mr-1 ml-1" /> {overview.time}
-              {courseOverviewModule && activeModule === overview.id ? (
-                <CheckCircleTwoTone className="ml-2" />
-              ) : (
-                <DownCircleOutlined className="ml-2" />
-              )}
+      <div>
+        <div
+          className="flex justify-between items-center cursor-pointer mb-3"
+          onClick={() => {
+            handleCourseOverViewModule();
+            handleSingleActiveModule(numberIndex);
+            handleClick(numberIndex)
+          }}
+        >
+          <div>
+            <p className="mb-0 text-xs font-bold text-gray-500">
+              Module {numberIndex}
             </p>
+            <p className="mb-0 text-xs font-medium text-gray-500">{title}</p>
           </div>
 
-          {courseOverviewModule && activeModule === overview.id && (
-            <div className="mt-5">
-              <Timeline>
-                <Item>Getting started lesson</Item>
-                <Item>Overview about basic tools</Item>
-                <Item>Virtual design using tools</Item>
-              </Timeline>
-            </div>
-          )}
+          <p className="flex items-center mb-0 text-xs font-bold text-gray-500"></p>
         </div>
-      ))}
+
+        {courseOverviewModule && activeModule === numberIndex && (
+          <div className="mt-5">
+            <Timeline>
+              <Item>Getting started lesson</Item>
+              <Item>Overview about basic tools</Item>
+              <Item>Virtual design using tools</Item>
+            </Timeline>
+          </div>
+        )}
+      </div>
     </>
   );
 };

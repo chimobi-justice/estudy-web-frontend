@@ -9,15 +9,13 @@ export const uploadCourseFiles = async (
   const form = new FormData();
 
   if (formDataKey === 'thumbnail') {
-
     form.append(formDataKey, files[0]);
+  }
 
-  } else if (formDataKey === 'video') {
-    
+  if (formDataKey === 'video') {
     for (let i = 0; i < files.length; i++) {
       form.append(`${formDataKey}[${i}]`, files[i]);
     }
-    
   }
 
   try {
@@ -41,9 +39,11 @@ export const uploadCourseFiles = async (
     return res?.data;
   } catch (error) {
     if (error?.response?.data?.message) {
-      throw error.response.data.message;
+      if (error?.response?.data?.errors?.thumbnail) {
+        throw error.response.data.errors.thumbnail[0];
+      }
     } else {
-      throw new Error ('Something went wrong during file upload');
+      throw new Error('Something went wrong during file upload');
     }
   }
 };

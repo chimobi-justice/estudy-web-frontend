@@ -109,10 +109,8 @@ const StudentCourse = () => {
 
       {getCourseEnrolled && getCourseEnrolled?.data?.data?.length === 0 && (
         <>
-          <div
-            style={{ width: '50%', margin: '5em auto', textAlign: 'center' }}
-          >
-            <div style={{ width: '60%', margin: '0px auto' }}>
+          <div className="w-ful lg:w-2/4 mx-auto pb-5 text-center">
+            <div className="mx-auto w-11/12 lg:w-3/5">
               <img
                 src={EmptyState}
                 alt=""
@@ -120,7 +118,8 @@ const StudentCourse = () => {
               />
             </div>
             <h2>
-              Enrolled courses will show up here? <Link to="/s/dashboard">Please Enroll a course</Link>
+              Enrolled courses will show up here?
+              <Link to="/s/dashboard">Please Enroll a course</Link>
             </h2>
           </div>
         </>
