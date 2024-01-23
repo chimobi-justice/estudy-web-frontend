@@ -15,7 +15,7 @@ const userProfileAll = async (fields) => {
 };
 
 const deleteAccount = async () => {
-  const response = await axiosInstance.post('/user/delete');
+  const response = await axiosInstance.delete('/user/delete');
   return response.data; 
 };
 
