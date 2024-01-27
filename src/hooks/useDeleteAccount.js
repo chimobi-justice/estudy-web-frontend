@@ -7,6 +7,7 @@ const useDeleteAccount = () => {
   
   return useMutation({
     mutationFn: deleteAccount,
+    
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['user'],
