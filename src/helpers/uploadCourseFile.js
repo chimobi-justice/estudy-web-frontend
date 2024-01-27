@@ -13,9 +13,7 @@ export const uploadCourseFiles = async (
   }
 
   if (formDataKey === 'video') {
-    for (let i = 0; i < files.length; i++) {
-      form.append(`${formDataKey}[${i}]`, files[i]);
-    }
+    form.append(formDataKey, files[0]);
   }
 
   try {
