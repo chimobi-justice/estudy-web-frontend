@@ -93,7 +93,7 @@ const StudentDashboard = () => {
                 </h3>
 
                 <p className="text-xs text-gray-500 font-thin mb-0">
-                  ${course?.price}
+                  {course?.price ? '$' : 'free'}{course?.price}  
                 </p>
               </div>
               <div className="flex items-center my-2">

@@ -111,7 +111,7 @@ const AllCourse = () => {
                       {d?.name}
                     </Table.Cell>
                     <Table.Cell>{d?.video}</Table.Cell>
-                    <Table.Cell>${d?.price}</Table.Cell>
+                    <Table.Cell>{d?.price ? '$' : 'free'}{d?.price}</Table.Cell>
                     <Table.Cell>{d?.created_at?.human_short}</Table.Cell>
                     <Table.Cell>
                       <Dropdown

@@ -97,7 +97,7 @@ const AddCourse = () => {
               setImagePath(responseData.thumbnail);
             }
             if (formDataKey === 'video') {
-              setVideoPath([...videoPath, responseData.videos]);
+              setVideoPath([...videoPath, responseData.video]);
             }
           }
         } catch (error) {
@@ -132,7 +132,7 @@ const AddCourse = () => {
 
             <div className="w-full mb-2">
               <label htmlFor="">
-                Course Price <span className="text-red-500">*</span>
+                Course Price
               </label>
               <Input
                 type="text"
