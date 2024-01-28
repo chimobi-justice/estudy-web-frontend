@@ -37,7 +37,7 @@ const CourseOverviewModule = ({ title, numberIndex, handleClick }) => {
           <p className="flex items-center mb-0 text-xs font-bold text-gray-500"></p>
         </div>
 
-        {courseOverviewModule && activeModule === numberIndex && (
+        {/* {courseOverviewModule && activeModule === numberIndex && (
           <div className="mt-5">
             <Timeline>
               <Item>Getting started lesson</Item>
@@ -45,7 +45,7 @@ const CourseOverviewModule = ({ title, numberIndex, handleClick }) => {
               <Item>Virtual design using tools</Item>
             </Timeline>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

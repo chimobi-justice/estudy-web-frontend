@@ -96,7 +96,7 @@ const StudentCourse = () => {
                 </h3>
                 <div className="flex justify-between items-center my-2">
                   <p className="flex items-center text-xs text-gray-500 font-thin">
-                    ${course?.price}
+                    {course?.price ? '$' : 'free'}{course?.price}
                   </p>
                   <p className="flex items-center text-xs text-gray-500 font-thin">
                     {course?.video?.length} hours

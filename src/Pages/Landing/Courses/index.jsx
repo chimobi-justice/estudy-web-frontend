@@ -79,7 +79,7 @@ const HomeCourse = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500 text-sm">${course?.price}</p>
+                      <p className="text-gray-500 text-sm">{course?.price ? '$' : 'free'}{course?.price}</p>
                     </div>
                   </div>
                 </Link>
