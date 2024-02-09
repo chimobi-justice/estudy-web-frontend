@@ -16,6 +16,10 @@ export const uploadCourseFiles = async (
     form.append(formDataKey, files[0]);
   }
 
+  if (formDataKey === 'course_preview') {
+    form.append(formDataKey, files[0]);
+  }
+
   try {
     const res = await axiosInstance.post(`/courses/m/${endpoint}`, form, {
       withCredentials: true,

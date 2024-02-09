@@ -1,15 +1,11 @@
 import { useState } from "react";
-
 import Layout from "../../../Layouts";
-
 import STUDENT_SETTING_ASIDE_LEFT_BOX from "../../../constants/studentSetting";
-
 import General from "./General";
 import EmailNotification from "./EmailNotification";
 import Subcription from "./Subcription";
 import Payment from "./Payment";
 import LearningReminder from "./LearningReminder";
-
 import {
   Wrapper,
   AsideLeftWrapper,

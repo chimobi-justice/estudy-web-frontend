@@ -2,7 +2,6 @@ import { createContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getUser } from "../api/users";
 
-
 export const UserProfileContext = createContext(null);
 
 const UserProfileContextProvider = ({ children }) => {

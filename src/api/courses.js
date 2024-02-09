@@ -13,6 +13,11 @@ const getSingleStudentCourseOverview = async (id) => {
   return response.data; 
 };
 
+const getStudentPaidCourseOverview = async (slug) => {
+  const response = await axiosInstance.get(`courses/s/paid-overview/${slug}`);
+  return response.data; 
+};
+
 const studentEnrollCourse = async (id) => {
   return await axiosInstance.post(`courses/s/user/${id}/enroll`);
 };
@@ -49,7 +54,8 @@ const updateCourse = async ({ id, data }) => {
 };
 
 const getUpdateCourse = async (id) => {
-  return await axiosInstance.get(`courses/m/${id}`);
+  const response =  await axiosInstance.get(`courses/m/${id}`);
+  return response.data;
 };
 
 const getMentorEnrolledStudents = async (page = 1) => {
@@ -63,6 +69,7 @@ export {
   allCourse,
   studentAllCourse,
   getSingleStudentCourseOverview,
+  getStudentPaidCourseOverview,
   createCourse,
   getMentorCourses,
   deleteCourse,

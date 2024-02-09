@@ -1,21 +1,20 @@
 import Landing from '../../Pages/Landing';
-
 import Signup from '../../Pages/Signup';
 import Login from '../../Pages/Login';
-
 import StudentDashboard from '../../Pages/Student';
 import StudentCourse from '../../Pages/Student/Course';
-import StudentCourseOverview from '../../Pages/Student/CousreOverview';
+import StudentCourseOverview from '../../Pages/Student/CourseOverview';
 import StudentProfile from '../../Pages/Student/Profile';
 import StudentSetting from '../../Pages/Student/Setting';
 import StudentChat from '../../Pages/Student/Chat';
-
 import TeacherDashboard from '../../Pages/Teacher';
 import AllCourse from '../../Pages/Teacher/Course/AllCourse';
 import AddCourse from '../../Pages/Teacher/Course/AddCourse';
 import UpdateCourse from '../../Pages/Teacher/Course/UpdateCourse';
 import TeacherProfile from '../../Pages/Teacher/Profile';
 import GetTeacherStudent from '../../Pages/Teacher/Student';
+import PaidCourseOvewview from '../../Pages/Student/PaidCourseOverview';
+import PaymentCallback from '../../Pages/PaymentCallback';
 
 export const BaseComponent = [
   // student paths
@@ -50,6 +49,11 @@ export const BaseComponent = [
     useAuth: true,
   },
   {
+    Component: PaidCourseOvewview,
+    path: '/s/:slug/course',
+    useAuth: true,
+  },
+  {
     Component: StudentProfile,
     path: '/s/profile',
     useAuth: true,
@@ -64,9 +68,13 @@ export const BaseComponent = [
     path: '/s/chat',
     useAuth: true,
   },
+  {
+    Component: PaymentCallback,
+    path: '/payment/checkout/callback',
+    useAuth: true,
+  },
 
   // end student paths
-
 
   // teacher paths
 

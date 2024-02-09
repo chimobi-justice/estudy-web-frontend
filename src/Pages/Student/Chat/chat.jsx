@@ -1,9 +1,6 @@
 import { Avatar, Badge, Divider, Input } from "antd";
-
 import Button from "../../../Components/Button";
-
 import STUDENT_CHAT from "../../../constants/studentChat";
-
 import {
   Wrapper,
   AsideLeftWrapper,
@@ -13,7 +10,6 @@ import {
   AsideRightContainer,
   StudentChatBoard,
 } from "./styled.chat";
-
 import {
   MoreOutlined,
   PhoneOutlined,

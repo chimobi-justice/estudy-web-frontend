@@ -1,20 +1,13 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-
 import { useQuery } from '@tanstack/react-query';
-
 import useUpdateCourse from '../../../../hooks/useUpdateCourse';
-
 import { useFormik } from 'formik';
 import { courseValidateSchema } from '../../../../validations/course';
-
 import { Input, Progress, message } from 'antd';
 import Layout from '../../../../Layouts';
-
 import Button from '../../../../Components/Button';
-
 import { FileInput, Modal, Select } from 'flowbite-react';
-
 import { getUpdateCourse } from '../../../../api/courses';
 import { errorNotification } from '../../../../helpers/notification';
 import { uploadCourseFiles } from '../../../../helpers/uploadCourseFile';
@@ -24,9 +17,11 @@ const { TextArea } = Input;
 const UpdateCourse = () => {
   const [imagePath, setImagePath] = useState('');
   const [videoPath, setVideoPath] = useState([]);
+  const [coursePreview, setCoursePreview] = useState('');
   const [uploadingFile, setUploadingFile] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [courseTitle, setCourseTitle] = useState([]);
+  const [courseSubTitle, setCourseSubTitle] = useState([]);
 
   const updateCourseMutation = useUpdateCourse();
 
@@ -37,14 +32,19 @@ const UpdateCourse = () => {
     queryFn: () => getUpdateCourse(id),
   });
 
+  const res = course_value?.data;
+
   const _handleUpdateCourse = (values) => {
     const payload = {
       name: values.name,
       category: values.category,
       price: values.price,
       description: values.description,
-      thumbnail: imagePath || course_value?.data?.data?.thumbnail,
-      video: videoPath || course_value?.data?.data?.video,
+      thumbnail: res?.thumbnail || imagePath,
+      video: res?.video || videoPath,
+      title: res?.title || courseTitle,
+      sub_title: res?.sub_title || values.sub_title,
+      course_preview: coursePreview || res?.course_preview,
     };
 
     updateCourseMutation.mutate({
@@ -55,24 +55,12 @@ const UpdateCourse = () => {
 
   const formik = useFormik({
     initialValues: {
-      name: course_value?.data?.data?.name
-        ? course_value?.data?.data?.name
-        : '',
-      price: course_value?.data?.data?.price
-        ? course_value?.data?.data?.price
-        : '',
-      category: course_value?.data?.data?.category
-        ? course_value?.data?.data?.category
-        : '',
-      description: course_value?.data?.data?.description
-        ? course_value?.data?.data?.description
-        : '',
-      thumbnail: course_value?.data?.data?.thumbnail
-        ? course_value?.data?.data?.thumbnail
-        : '',
-      video: course_value?.data?.data?.thumbnail
-        ? course_value?.data?.data?.video
-        : '',
+      name: res?.name ? res?.name : '',
+      price: res?.price ? res?.price : '',
+      category: res?.category ? res?.category : '',
+      description: res?.description ? res?.description : '',
+      title: res?.title ? res?.title[0] : '',
+      sub_title: res?.sub_title ? res?.sub_title[0] : '',
     },
     onSubmit: _handleUpdateCourse,
     validationSchema: courseValidateSchema,
@@ -85,8 +73,20 @@ const UpdateCourse = () => {
     e.preventDefault();
 
     const files = e.target.files;
-    const formDataKey = fileType === 'thumbnail' ? 'thumbnail' : 'video';
-    const endpoint = fileType === 'video' ? 'video' : 'thumbnail';
+
+    const formDataKey =
+      fileType === 'thumbnail'
+        ? 'thumbnail'
+        : fileType === 'video'
+        ? 'video'
+        : 'course_preview';
+
+    const endpoint =
+      fileType === 'video'
+        ? 'video'
+        : fileType === 'thumbnail'
+        ? 'thumbnail'
+        : 'course_preview';
 
     if (files) {
       const fileSize = files[0].size;
@@ -122,8 +122,12 @@ const UpdateCourse = () => {
           if (responseData) {
             if (formDataKey === 'thumbnail') {
               setImagePath(responseData.thumbnail);
-            } else if (formDataKey === 'video') {
-              setVideoPath(responseData.videos);
+            }
+            if (formDataKey === 'video') {
+              setVideoPath(responseData.video);
+            }
+            if (formDataKey === 'course_preview') {
+              setCoursePreview(responseData.course_preview);
             }
           }
         } catch (error) {
@@ -162,7 +166,7 @@ const UpdateCourse = () => {
               </label>
               <Input
                 type="text"
-                placeholder="Course Price"
+                placeholder="Course Price in ₦"
                 name="price"
                 value={values.price}
                 onBlur={handleBlur}
@@ -223,6 +227,22 @@ const UpdateCourse = () => {
                 )}
             </div>
 
+            <div className="mb-2">
+              <label htmlFor="">
+                Course Preview <span className="text-red-500">*</span>
+              </label>
+              <FileInput
+                onChange={(e) => handleFileUpload(e, 'course_preview')}
+              />
+              {coursePreview &&
+                uploadingFile &&
+                uploadingFile?.dataKey === 'course_preview' && (
+                  <div>
+                    <Progress percent={uploadingFile?.status} />
+                  </div>
+                )}
+            </div>
+
             <div>
               <Button
                 label="Add Video"
@@ -277,6 +297,24 @@ const UpdateCourse = () => {
 
                 <div className="w-full mb-2">
                   <label htmlFor="">
+                    Sub Title <span className="text-red-500">*</span>
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="introduction project (eg, What you'll build)"
+                    name="sub_title"
+                    value={values.sub_title}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    style={{ padding: '6px', marginTop: '5px' }}
+                  />
+                  {errors.sub_title && (
+                    <p className="text-red-300 mb-0">{errors.sub_title}</p>
+                  )}
+                </div>
+
+                <div className="w-full mb-2">
+                  <label htmlFor="">
                     Course Video <span className="text-red-500">*</span>
                   </label>
                   <FileInput onChange={(e) => handleFileUpload(e, 'video')} />
@@ -295,9 +333,17 @@ const UpdateCourse = () => {
                     type="button"
                     disabled={!values.title || !videoPath.length < 0}
                     handleClick={() => {
-                      if (values.title && videoPath.length > 0) {
+                      if (
+                        values.title &&
+                        values.sub_title &&
+                        videoPath.length > 0
+                      ) {
                         setCourseTitle([...courseTitle, values.title]);
-                        message.success('Added successfully');
+                        setCourseSubTitle([
+                          ...courseSubTitle,
+                          values.sub_title,
+                        ]);
+                        message.success('Updated successfully');
                         setOpenModal(false);
                       }
                     }}

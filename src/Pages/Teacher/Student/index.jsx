@@ -1,7 +1,5 @@
 import { Select } from 'flowbite-react';
-
 import StudentList from './StudentList';
-
 import {
   BarChart,
   Bar,
@@ -12,7 +10,6 @@ import {
   Pie,
   PieChart,
 } from 'recharts';
-
 import Layout from '../../../Layouts';
 
 const data = [

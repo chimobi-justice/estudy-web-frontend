@@ -1,16 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useQuery } from '@tanstack/react-query';
-
 import useDeleteCourse from '../../../../hooks/useDeleteCourse';
-
 import { Dropdown, Table, Modal } from 'flowbite-react';
-
 import { getMentorCourses } from '../../../../api/courses';
-
 import EmptyState from '../../../../assets/images/No_data.png';
-
 import { Select } from 'antd';
 import {
   AppstoreOutlined,
@@ -19,10 +13,10 @@ import {
   DashOutlined,
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
-
 import Layout from '../../../../Layouts';
 import Button from '../../../../Components/Button';
 import Skeleton from '../../../../Components/Skeleton';
+import Truncate from '../../../../helpers/truncate';
 
 const { Option } = Select;
 
@@ -108,10 +102,10 @@ const AllCourse = () => {
                     key={d?.id}
                   >
                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                      {d?.name}
+                      {Truncate(d?.name)}
                     </Table.Cell>
                     <Table.Cell>{d?.video}</Table.Cell>
-                    <Table.Cell>{d?.price ? '$' : 'free'}{d?.price}</Table.Cell>
+                    <Table.Cell>{d?.price ? '₦' : '₦0.00'}{d?.price}</Table.Cell>
                     <Table.Cell>{d?.created_at?.human_short}</Table.Cell>
                     <Table.Cell>
                       <Dropdown

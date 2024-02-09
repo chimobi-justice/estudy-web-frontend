@@ -1,21 +1,15 @@
 import { useContext, useState } from 'react';
-
 import { Link } from 'react-router-dom';
-
 import useDeleteAccount from '../../../hooks/useDeleteAccount';
-
 import Layout from '../../../Layouts';
-
 import { UserProfileContext } from '../../../context/userContext';
-
 import PersonalDetails from './Tabs/PersonalDetails';
-
 import medal from '../../../assets/images/medal.png';
 import trophy from '../../../assets/images/trophy.png';
 import quality from '../../../assets/images/quality.png';
 import secTrophy from '../../../assets/images/sectrophy.png';
-
-import { Avatar, Tabs, Badge } from 'antd';
+import Avatar from 'react-avatar';
+import { Avatar as AntAvatar, Tabs, Badge } from 'antd';
 import {
   UserOutlined,
   ExclamationCircleOutlined,
@@ -40,23 +34,23 @@ const StudentProfile = () => {
         <div className="flex flex-col lg:flex-row lg:justify-between">
           <div className="w-full lg:w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
             <div className="w-7/12 m-auto text-center my-7">
-              {user?.data?.data?.avatar && (
-                <Avatar
+              {user?.data?.avatar && (
+                <AntAvatar
                   shape="circle"
                   size="large"
-                  src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+                  src={<img src={user?.data?.avatar} alt="avatar" />}
                   style={{ height: '65px', width: '65px' }}
                 />
               )}
-              {!user?.data?.data?.avatar && (
+              {!user?.data?.avatar && (
                 <Avatar
-                  shape="circle"
-                  size="large"
-                  icon={<UserOutlined />}
-                  style={{ height: '65px', width: '65px' }}
+                  name={user?.data?.fullname}
+                  size="100"
+                  round={true}
+                  className="mb-1 text-2xl"
                 />
               )}
-              <p>{user?.data?.data?.fullname}</p>
+              <p>{user?.data?.fullname}</p>
             </div>
             <div className="flex justify-between text-center">
               <div>

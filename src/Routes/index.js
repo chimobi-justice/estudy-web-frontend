@@ -1,11 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
-
 import { BaseComponent } from '../constants/baseComponent';
-
 import ErrorBoundary from '../ErrorBoundary';
-
 // import PrivateRoute from './privateRoute';
-
 import NotFound from '../Components/NotFound';
 import UserProfileContextProvider from '../context/userContext';
 

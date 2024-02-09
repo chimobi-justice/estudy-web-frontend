@@ -1,31 +1,24 @@
 import { Link } from 'react-router-dom';
-
 import useCourses from '../../hooks/useCourses';
-import useCreateEnrollCourse from '../../hooks/useCreateEnrollCourse';
-
 import Layout from '../../Layouts';
-
+import Avatar from 'react-avatar';
 import {
   AppstoreOutlined,
   BarsOutlined,
   CaretDownOutlined,
 } from '@ant-design/icons';
-import { Avatar, Select } from 'antd';
-
+import { Select } from 'antd';
 import {
   DashbaordCourseIconImage,
   DashbaordCourseHolderImage,
 } from './styled.index';
 import Skeleton from '../../Components/Skeleton';
-
-import Button from '../../Components/Button';
+import Truncate from '../../helpers/truncate';
 
 const { Option } = Select;
 
 const StudentDashboard = () => {
   const { data: getAllCourses, isLoading } = useCourses();
-
-  const enrollCourseMutation = useCreateEnrollCourse();
 
   return (
     <Layout label="Dashboard">
@@ -62,66 +55,61 @@ const StudentDashboard = () => {
       {isLoading && <Skeleton />}
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6 p-2">
-        {getAllCourses?.data?.data?.map((course) => (
-          <Link
-            to={`/s/course/${course?.id}/overview`}
-            key={course?.id}
-            className="relative shadow-lg bg-white mb-2 border"
-          >
-            <div className="p-4">
-              <div className="flex justify-between items-center my-2">
-                <div>
-                  <DashbaordCourseIconImage src={course?.thumbnail} />
+        {getAllCourses?.data?.data?.map((course) => {
+          return (
+            <Link
+              to={
+                course?.price
+                  ? `/s/${course?.slug}/course`
+                  : `/s/course/${course?.id}/overview`
+              }
+              key={course?.id}
+              className="relative shadow-lg bg-white mb-2 border"
+            >
+              <div className="p-4">
+                <div className="flex justify-between items-center my-2">
+                  <div>
+                    <DashbaordCourseIconImage src={course?.thumbnail} />
+                  </div>
                 </div>
 
-                {course?.isEnrolled ? null : (
-                  <Button
-                    label="Enroll"
-                    type="button"
-                    bgColor="primary"
-                    handleClick={(e) => {
-                      e.preventDefault();
-                      enrollCourseMutation.mutate(course.id);
-                    }}
-                  />
-                )}
-              </div>
+                <div className="flex justify-between items-center my-2">
+                  <h3 className="mb-0 font-medium text-gray-600">
+                    {Truncate(course?.name, 22)}
+                  </h3>
 
-              <div className="flex justify-between items-center my-2">
-                <h3 className="mb-0 font-medium text-gray-600">
-                  {course?.name}
-                </h3>
-
-                <p className="text-xs text-gray-500 font-thin mb-0">
-                  {course?.price ? '$' : 'free'}{course?.price}  
-                </p>
-              </div>
-              <div className="flex items-center my-2">
-                <div>
-                  {course?.profile?.avatar ? (
-                    <DashbaordCourseHolderImage src={course?.profile?.avatar} />
-                  ) : (
-                    <Avatar
-                      shape="circle"
-                      size="small"
-                      style={{
-                        marginRight: '3px',
-                      }}
+                  <p className="text-xs text-gray-500 font-thin mb-0">
+                    {course?.price ? '₦' : '₦0.00'}
+                    {course?.price}
+                  </p>
+                </div>
+                <div className="flex items-center my-2">
+                  <div>
+                    {course?.profile?.avatar ? (
+                      <DashbaordCourseHolderImage
+                        src={course?.profile?.avatar}
+                      />
+                    ) : (
+                      <Avatar
+                      name={course?.profile?.fullname}
+                      size="25"
+                      round={true}
                     />
-                  )}
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500 mb-0 ml-2">
+                    {course?.profile?.fullname}
+                  </p>
                 </div>
-                <p className="text-xs text-gray-500 mb-0 ml-2">
-                  {course?.profile?.fullname}
-                </p>
+                <div className="flex justify-between items-center my-2">
+                  <p className="flex items-center text-xs text-gray-500 font-thin">
+                    {course?.created_at?.human}
+                  </p>
+                </div>
               </div>
-              <div className="flex justify-between items-center my-2">
-                <p className="flex items-center text-xs text-gray-500 font-thin">
-                  {course?.created_at?.human}
-                </p>
-              </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </Layout>
   );
