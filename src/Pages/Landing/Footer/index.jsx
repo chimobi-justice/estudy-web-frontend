@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
-
 import StyledFooter from './styled.footer';
-
 import Logo from '../../../Components/Logo';
-
 
 const Footer = () => {
   return (
@@ -27,16 +24,16 @@ const Footer = () => {
             <h4 className="">LINKS</h4>
             <ul className="footer-widget__navigation">
               <li>
-                <a href="/" className="text-gray-800">Home</a>
+                <Link to="/" className="text-gray-800">Home</Link>
               </li>
               <li>
-                <a href="/about-us" className="text-gray-800">About Us</a>
+                <Link to="/about-us" className="text-gray-800">About Us</Link>
               </li>
               <li>
-                <a href="/services" className="text-gray-800">Service</a>
+                <Link to="/services" className="text-gray-800">Service</Link>
               </li>
               <li>
-                <a href="contact-us" className="text-gray-800">Contact Us</a>
+                <Link to="contact-us" className="text-gray-800">Contact Us</Link>
               </li>
             </ul>
           </div>
@@ -63,7 +60,7 @@ const Footer = () => {
       <div className="border-t-2">
         <div className="text-center">
           <p className="pt-6">
-            &copy; Estudy {new Date().getFullYear()}. All Rights Reserved.
+            &copy; Estudy {new Date().getFullYear()}. All Rights Reserved. Born in NG 🇳🇬.
           </p>
         </div>
       </div>

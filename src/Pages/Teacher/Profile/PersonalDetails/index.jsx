@@ -1,15 +1,12 @@
 import { useContext } from 'react';
-
 import { UserProfileContext } from '../../../../context/userContext';
-
 import useCreateProfile from '../../../../hooks/useCreateProfile';
-
 import { Input } from 'antd';
 import { useFormik } from 'formik';
-
 import Button from '../../../../Components/Button';
 import { validateSchema } from '../../../../validations/studentProfile';
 import UploadAvatar from '../../../../Components/UploadAvatar';
+import Bio from '../../../../Components/Bio';
 
 const { TextArea } = Input;
 
@@ -33,13 +30,13 @@ const PersonalDetails = () => {
 
   const formik = useFormik({
     initialValues: {
-      fullname: user?.data?.data?.fullname ? user?.data?.data?.fullname : '',
-      email: user?.data?.data?.email ? user?.data?.data?.email : '',
-      address: user?.data?.data?.address ? user?.data?.data?.address : '',
-      city: user?.data?.data?.city ? user?.data?.data?.city : '',
-      state: user?.data?.data?.state ? user?.data?.data?.state : '',
-      zip: user?.data?.data?.zip ? user?.data?.data?.zip : '',
-      country: user?.data?.data?.country ? user?.data?.data?.country : '',
+      fullname: user?.data?.fullname ? user?.data?.fullname : '',
+      email: user?.data?.email ? user?.data?.email : '',
+      address: user?.data?.address ? user?.data?.address : '',
+      city: user?.data?.city ? user?.data?.city : '',
+      state: user?.data?.state ? user?.data?.state : '',
+      zip: user?.data?.zip ? user?.data?.zip : '',
+      country: user?.data?.country ? user?.data?.country : '',
     },
     onSubmit: _handleStudentProfile,
     validationSchema: validateSchema,
@@ -47,11 +44,12 @@ const PersonalDetails = () => {
   });
 
   const { handleChange, handleBlur, handleSubmit, errors, values } = formik;
-  
+
   return (
     <>
-      <div className="py-1">
+      <div className="py-1 flex justify-between">
         <p className="text-xl lg:text-2xl text-gray-600">Profile Settings</p>
+        <Bio />
       </div>
 
       <UploadAvatar />

@@ -1,11 +1,8 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-
 import Logo from '../../Logo';
 import Button from '../../Button';
-
 import { AsideNavWrapper } from './styled.AsideNav';
 import useAuth from '../../../auth';
-
 import { STUDENT_ASIDE_NAV } from '../../../constants/studentAsideNav';
 import { TEACHER_ASIDE_NAV } from '../../../constants/teacherAsideNav';
 

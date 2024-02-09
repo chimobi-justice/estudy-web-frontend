@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-
 import { axiosInstance } from '../axiosInstance';
 import { baseURL } from '../axiosInstance/constants';
-
 import {
   errorNotification,
   successNotification,
@@ -26,16 +24,14 @@ const useAuth = () => {
         const accessToken = data?.access_token;
 
         if (accessToken) {
-          axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        }
+          localStorage.setItem('uc', accessToken);
 
-        if (data?.user_type === 'mentee') {
-          localStorage.setItem('uc', data?.access_token);
-          navigate('/s/dashboard');
-        }
-        if (data?.user_type === 'mentor') {
-          localStorage.setItem('uc', data?.access_token);
-          navigate('/m/dashboard');
+          if (data?.user_type === 'mentee') {
+            navigate('/s/dashboard');
+          }
+          if (data?.user_type === 'mentor') {
+            navigate('/m/dashboard');
+          }
         }
       }
 
@@ -51,7 +47,7 @@ const useAuth = () => {
       }
     }
   }
-  
+
   async function signUp(fields) {
     await authServerCall(`${baseURL}auth/signup`, fields);
   }
@@ -67,7 +63,7 @@ const useAuth = () => {
   return {
     signUp,
     signIn,
-    signOut
+    signOut,
   };
 };
 

@@ -1,26 +1,22 @@
 import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import { UserProfileContext } from '../../../context/userContext';
-
 import useDeleteAccount from '../../../hooks/useDeleteAccount';
-
 import Layout from '../../../Layouts';
-
-import { Avatar } from 'antd';
-
+import Avatar from 'react-avatar';
+import { Avatar as AntAvatar } from 'antd';
 import {
   BookOutlined,
   DeleteOutlined,
   ExclamationCircleOutlined,
   IssuesCloseOutlined,
   StarOutlined,
-  UserOutlined,
   UsergroupAddOutlined,
 } from '@ant-design/icons';
 import Button from '../../../Components/Button';
 import { Modal } from 'flowbite-react';
 import PersonalDetails from './PersonalDetails';
+import Truncate from '../../../helpers/truncate';
 
 const TeacherProfile = () => {
   const { user } = useContext(UserProfileContext);
@@ -32,39 +28,39 @@ const TeacherProfile = () => {
     <Layout label="Profile">
       <>
         <div className="flex flex-col lg:flex-row lg:justify-between">
-          <div className="w-full lg:w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
+          <div className="w-full h-auto lg:w-3/12 p-4 bg-white shadow-lg rounded-2xl mr-4">
             <div className="w-7/12 m-auto text-center my-4 lg:my-7">
               {user?.data?.data?.avatar && (
-                <Avatar
+                <AntAvatar
                   shape="circle"
                   size="large"
-                  src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+                  src={<img src={user?.data?.avatar} alt="avatar" />}
                   style={{ height: '65px', width: '65px' }}
                 />
               )}
-              {!user?.data?.data?.avatar && (
+              {!user?.data?.avatar && (
                 <Avatar
-                  shape="circle"
-                  size="large"
-                  icon={<UserOutlined />}
-                  style={{ height: '65px', width: '65px' }}
+                  name={user?.data?.fullname}
+                  size="100"
+                  round={true}
+                  className="mb-1 text-2xl"
                 />
               )}
-              <p>{user?.data?.data?.fullname}</p>
+              <p>{user?.data?.fullname}</p>
             </div>
             <div className="flex justify-around text-center">
               <div className="text-center items-center">
-                <UsergroupAddOutlined className="text-3xl"/>
+                <UsergroupAddOutlined className="text-3xl" />
                 <p>20</p>
                 <p className="text-xs text-gray-500">Student</p>
               </div>
               <div className="text-center items-center">
-                <BookOutlined className="text-3xl"/>
+                <BookOutlined className="text-3xl" />
                 <p>20</p>
                 <p className="text-xs text-gray-500">Course</p>
               </div>
               <div className="text-center items-center">
-                <StarOutlined className="text-3xl"/>
+                <StarOutlined className="text-3xl" />
                 <p>20</p>
                 <p className="text-xs text-gray-500">Rating</p>
               </div>
@@ -76,9 +72,13 @@ const TeacherProfile = () => {
               </h3>
               <div className="mb-6">
                 <p className="text-xs text-gray-400">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam voluptas, doloribus adipisci libero quisquam
-                  debitis.
+                  {user?.data?.bio ? (
+                    Truncate(user?.data?.bio, 335)
+                  ) : (
+                    <p className="text-lg text-center font-bold p-2">
+                      No Bio to show yet!
+                    </p>
+                  )}
                 </p>
               </div>
             </div>

@@ -1,25 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { studentEnrollCourse } from "../api/courses";
+import { userProfileBio } from "../api/users";
 import { errorNotification, successNotification } from "../helpers/notification";
 
-const useCreateEnrollCourse = () => {
+const useCreateProfileBio = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: studentEnrollCourse,
+    mutationFn: userProfileBio,
     onSuccess: (data) => {
-      successNotification(data?.data?.message);
+      successNotification(data?.message);
+
       queryClient.invalidateQueries({
-        queryKeys: ['courses'],
-      });
-      queryClient.invalidateQueries({
-        queryKeys: ['course-overview'],
+        queryKey: ['user'],
       });
     },
     onError: (error) => {
       errorNotification(error?.response?.data?.message);
     },
-  });
+  })
 }
 
-export default useCreateEnrollCourse;
+export default useCreateProfileBio;

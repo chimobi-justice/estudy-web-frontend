@@ -1,21 +1,18 @@
 import { Link } from 'react-router-dom';
-
 import { useQuery } from '@tanstack/react-query';
 import { allCourse } from '../../../api/courses';
-
 import Button from '../../../Components/Button';
-
 import { CourseWrapper, CourseBoxImage, CourseHolder } from './styled.course';
 import Skeleton from '../../../Components/Skeleton';
-
-import { Avatar } from 'antd';
+import { Avatar as AntAvatar } from 'antd';
+import Avatar from 'react-avatar';
 
 const HomeCourse = () => {
   const { data: allCourses, isLoading } = useQuery({
     queryKey: ['courses'],
     queryFn: allCourse,
   });
-  
+
   return (
     <CourseWrapper className="pt-8 pb-8">
       <h3 className="text-2xl text-center font-bold text-gray-900 lg:w-3/12 sm:w-full m-auto">
@@ -38,7 +35,7 @@ const HomeCourse = () => {
                       <div>
                         <span>
                           {course?.profile?.avatar ? (
-                            <Avatar
+                            <AntAvatar
                               shape="circle"
                               size="small"
                               src={
@@ -53,11 +50,10 @@ const HomeCourse = () => {
                             />
                           ) : (
                             <Avatar
-                              shape="circle"
-                              size="small"
-                              style={{
-                                marginRight: '3px',
-                              }}
+                              name={course?.profile?.fullname}
+                              size="30"
+                              round={true}
+                              className="mr-1"
                             />
                           )}
                         </span>
@@ -79,7 +75,10 @@ const HomeCourse = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-gray-500 text-sm">{course?.price ? '$' : 'free'}{course?.price}</p>
+                      <p className="text-gray-500 text-sm">
+                        {course?.price ? '₦' : '₦0.00'}
+                        {course?.price}
+                      </p>
                     </div>
                   </div>
                 </Link>

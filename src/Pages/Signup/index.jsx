@@ -1,10 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom';
-
 import { useFormik } from 'formik';
 import { signUpvalidateSchema } from '../../validations/signup';
-
 import SignUpUser from '../../auth/SignUp';
-
 import { Input } from 'antd';
 import {
   EyeInvisibleOutlined,
@@ -13,7 +10,6 @@ import {
   GoogleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-
 import Button from '../../Components/Button';
 
 const Signup = () => {

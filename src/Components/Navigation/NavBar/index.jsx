@@ -1,16 +1,13 @@
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-
 import { UserProfileContext } from '../../../context/userContext';
-
 import {
   AlignRightOutlined,
   CloseCircleOutlined,
   SearchOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
-import { Avatar, Input } from 'antd';
-
+import { Avatar as AntAvatar, Input } from 'antd';
+import Avatar from 'react-avatar';
 import { Nav } from './styled.Navbar';
 import useAuth from '../../../auth';
 import { STUDENT_ASIDE_NAV } from '../../../constants/studentAsideNav';
@@ -55,27 +52,25 @@ const Navbar = ({ label }) => {
         </div>
         <div className="flex w-1/7 items-center">
           <div className="flex items-center">
-            {user?.data?.data?.avatar && (
-              <Avatar
+            {user?.data?.avatar && (
+              <AntAvatar
                 shape="circle"
                 size="small"
-                src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+                src={<img src={user?.data?.avatar} alt="avatar" />}
                 style={{
                   marginRight: '3px',
                 }}
               />
             )}
-            {!user?.data?.data?.avatar && (
+            {!user?.data?.avatar && (
               <Avatar
-                shape="circle"
-                size="small"
-                icon={<UserOutlined />}
-                style={{
-                  marginRight: '3px',
-                }}
+                name={user?.data?.fullname}
+                size="30"
+                round={true}
+                className="mr-1"
               />
             )}
-            {user?.data?.data?.fullname ? user?.data?.data?.fullname : 'Guest'}
+            {user?.data?.fullname ? user?.data?.fullname : 'Guest'}
           </div>
         </div>
       </Nav>
@@ -85,31 +80,32 @@ const Navbar = ({ label }) => {
           <AlignRightOutlined className="text-2xl" />
         </div>
         <div>
-          {user?.data?.data?.avatar && (
-            <Avatar
+          {user?.data?.avatar && (
+            <AntAvatar
               shape="circle"
               size="small"
-              src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+              src={<img src={user?.data?.avatar} alt="avatar" />}
               style={{
                 marginRight: '3px',
               }}
             />
           )}
-          {!user?.data?.data?.avatar && (
+          {!user?.data?.avatar && (
             <Avatar
-              shape="circle"
-              size="small"
-              icon={<UserOutlined />}
-              style={{
-                marginRight: '3px',
-              }}
+              name={user?.data?.fullname}
+              size="30"
+              round={true}
+              className="mr-1"
             />
           )}
         </div>
       </Nav>
 
       {open && (
-        <ul className="top-0 fixed bg-green-900 w-full h-screen overflow-scroll p-3" style={{zIndex: '9999'}}>
+        <ul
+          className="top-0 fixed bg-green-900 w-full h-screen overflow-scroll p-3"
+          style={{ zIndex: '9999' }}
+        >
           <div className="flex justify-between">
             <h2 className="text-white text-lg">Estudy</h2>
             <div onClick={openMenu}>
@@ -145,7 +141,6 @@ const Navbar = ({ label }) => {
                 ))
               : null}
           </div>
-
 
           <div className="absolute bottom-8 w-11/12 p-2">
             <Button

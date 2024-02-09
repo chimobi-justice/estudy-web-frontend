@@ -18,7 +18,7 @@ export const STUDENT_ASIDE_NAV = [
   {
     id: 2,
     path: "/s/courses",
-    name: "Courses",
+    name: "My Courses",
     icon: <VideoCameraAddOutlined className="mr-1" />,
   },
   {

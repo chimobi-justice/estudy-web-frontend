@@ -1,12 +1,10 @@
 import Button from "../../../Components/Button";
-
 import {
   BecomeInstructorWrapper,
   BecomeInstructorHolder,
   BecomeInstructorContentBox,
   BecomeInstructorImageBox,
 } from "./styled.BecomeInstructor";
-
 import lifetime from "../../../assets/images/lifetime.svg";
 
 const BecomeInstructor = () => {

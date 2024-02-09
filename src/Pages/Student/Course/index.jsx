@@ -1,13 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import useCreateUnEnrollCourse from '../../../hooks/useCreateUnEnrollCourse';
 import useCoursesEnroll from '../../../hooks/useCoursesEnroll';
-
 import Layout from '../../../Layouts';
-
 import EmptyState from '../../../assets/images/No_data.png';
-
 import {
   AppstoreOutlined,
   BarsOutlined,
@@ -15,11 +11,11 @@ import {
   ExclamationCircleOutlined,
 } from '@ant-design/icons';
 import { Select } from 'antd';
-
 import { CourseIconImage } from './styled.Course';
+import Button from '../../../Components/Button';
 import Skeleton from '../../../Components/Skeleton';
 import { Modal } from 'flowbite-react';
-import Button from '../../../Components/Button';
+import Truncate from '../../../helpers/truncate';
 
 const { Option } = Select;
 
@@ -80,7 +76,7 @@ const StudentCourse = () => {
                   </div>
                   <div>
                     <Button
-                      label="Unenroll"
+                      label="Remove"
                       type="button"
                       bgColor="primary"
                       handleClick={(e) => {
@@ -92,11 +88,11 @@ const StudentCourse = () => {
                   </div>
                 </div>
                 <h3 className="my-2 font-medium text-gray-600">
-                  {course?.name}
+                  {Truncate(course?.name, 22)}
                 </h3>
                 <div className="flex justify-between items-center my-2">
                   <p className="flex items-center text-xs text-gray-500 font-thin">
-                    {course?.price ? '$' : 'free'}{course?.price}
+                    {course?.price ? '₦' : '₦0.00'}{course?.price}
                   </p>
                   <p className="flex items-center text-xs text-gray-500 font-thin">
                     {course?.video?.length} hours

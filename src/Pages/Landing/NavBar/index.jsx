@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import Button from '../../../Components/Button';
 import Logo from '../../../Components/Logo';
-
 import { DesktopNavBar, MobileNavBar } from './styled.navbar';
 import { AlignRightOutlined, CloseCircleOutlined } from '@ant-design/icons';
 

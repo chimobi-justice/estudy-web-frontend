@@ -1,7 +1,5 @@
 import { Component } from 'react';
-
 import { Result } from 'antd';
-
 import Button from '../Components/Button';
 
 class ErrorBoundary extends Component {

@@ -1,13 +1,11 @@
 import { useContext } from 'react';
-import useProfileAvatarMutation from '../../hooks/useProfileAvatarMutation';
+import useProfileAvatarMutation from '../../hooks/useCreateProfileAvatar';
 import { UserProfileContext } from '../../context/userContext';
-import { Avatar, message } from 'antd';
+import { Avatar as AntAvatar, message } from 'antd';
 import { CameraFilled } from '@ant-design/icons';
 import { axiosInstance } from '../../axiosInstance';
-
 import { errorNotification } from '../../helpers/notification';
-
-import DefaultUser from '../../assets/images/default_user.png';
+import Avatar from 'react-avatar';
 
 const UploadAvatar = () => {
   const { user } = useContext(UserProfileContext);
@@ -43,7 +41,7 @@ const UploadAvatar = () => {
           });
 
           if (res) {
-            if (res.status === 200) {
+            if (res.status === 201) {
               updateProfileAvatarMutation({
                 avatar: res?.data?.avatar,
               });
@@ -58,12 +56,12 @@ const UploadAvatar = () => {
 
   return (
     <div className="text-center my-8 relative">
-      {user?.data?.data?.avatar && (
+      {user?.data?.avatar && (
         <>
-          <Avatar
+          <AntAvatar
             shape="circle"
             size="large"
-            src={<img src={user?.data?.data?.avatar} alt="avatar" />}
+            src={<img src={user?.data?.avatar} alt="avatar" />}
             style={{ height: '140px', width: '140px', alignItems: 'center' }}
           />
           <label>
@@ -77,16 +75,16 @@ const UploadAvatar = () => {
           </label>
         </>
       )}
-      {!user?.data?.data?.avatar && (
+      {!user?.data?.avatar && (
         <>
           <Avatar
-            shape="circle"
-            size="large"
-            src={DefaultUser}
-            style={{ height: '140px', width: '140px', alignItems: 'center' }}
+            name={user?.data?.fullname}
+            size="145"
+            round={true}
+            className="mr-1 items-center"
           />
-          <label className="block cursor-pointer">
-            <CameraFilled className="absolute top-28 right-0 left-14 text-2xl" />
+          <label className="cursor-pointer">
+            <CameraFilled className="absolute top-28 right-0 left-16 text-2xl" />
             <input
               type="file"
               name="profileImage"

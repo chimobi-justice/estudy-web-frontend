@@ -4,11 +4,9 @@ import {
   PlatformImage, 
   PlatformImageWrapper 
 } from "./styled.platform";
-
 import expert from '../../../assets/images/expert.svg';
 import certificate from '../../../assets/images/certificate.svg';
 import lifetime from '../../../assets/images/lifetime.svg';
-
 
 const OurPlatform = () => {
   return (

@@ -9,13 +9,14 @@ import { UserOutlined } from '@ant-design/icons';
 import Skeleton from '../../../Components/Skeleton';
 
 import EmptyState from '../../../assets/images/No_data.png';
+import Truncate from '../../../helpers/truncate';
 
 const StudentList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const onPageChange = (page) => setCurrentPage(page);
 
-  const { data, isLoading, isPreviousData } = useGetMentorStudents(currentPage);
+  const { data, isLoading } = useGetMentorStudents(currentPage);
 
   const response = data?.data;
 
@@ -72,7 +73,7 @@ const StudentList = () => {
                         </p>
                       </Table.Cell>
                       <Table.Cell>
-                        #{enrollment?.enrolled_user_details?.id.slice(0, 8)}
+                        #{Truncate(enrollment?.enrolled_user_details?.id, 8)}
                       </Table.Cell>
                       <Table.Cell>
                         {enrollment?.course_details?.course_name}

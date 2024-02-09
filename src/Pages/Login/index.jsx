@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
-
 import { useFormik } from 'formik';
 import { signInvalidateSchema } from '../../validations/login';
-
 import SignInUser from '../../auth/SignIn';
-
 import { Input } from 'antd';
 import {
   EyeInvisibleOutlined,
@@ -13,7 +10,6 @@ import {
   GoogleOutlined,
   UserOutlined,
 } from '@ant-design/icons';
-
 import Button from '../../Components/Button';
 
 const Login = () => {
