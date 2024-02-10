@@ -73,7 +73,15 @@ const PaymentCallback = () => {
           status="error"
           title="Transaction Failed"
           subTitle="Please check and modify the following information before resubmitting."
-          extra={[<Button label="Go Back" bgColor="secondary" type="button" />]}
+          extra={[
+            <Button label="Go Back" 
+              bgColor="secondary" 
+              type="button"  
+              handleClick={() => {
+                window.location.href = `${process.env.REACT_APP_FRONTEND_URL}s/dashboard`
+              }} 
+            />
+          ]}
         />
       )}
     </>
