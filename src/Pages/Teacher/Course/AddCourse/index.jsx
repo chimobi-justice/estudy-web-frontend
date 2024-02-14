@@ -64,8 +64,13 @@ const AddCourse = () => {
 
     if (files) {
       const fileSize = files[0].size;
+
       const maxFileSizeInBytes =
-        fileType === 'thumbnail' ? 2 * 1024 * 1024 : 8 * 1024 * 1024;
+      fileType === 'thumbnail'
+        ? 2 * 1024 * 1024
+        : fileType === 'course_preview'
+        ? 8 * 1024 * 1024
+        : 20 * 1024 * 1024;
 
       const allowedVideoTypes = ['video/avi', 'video/mpeg', 'video/mp4'];
 
