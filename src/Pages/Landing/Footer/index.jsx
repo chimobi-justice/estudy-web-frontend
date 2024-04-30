@@ -60,7 +60,7 @@ const Footer = () => {
       <div className="border-t-2">
         <div className="text-center">
           <p className="pt-6">
-            &copy; Estudy {new Date().getFullYear()}. All Rights Reserved. Born in NG 🇳🇬.
+            &copy; Estudy {new Date().getFullYear()}. All Rights Reserved. Born in NG 	.
           </p>
         </div>
       </div>
