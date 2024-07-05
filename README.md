@@ -1,46 +1,30 @@
-# About ESTUDY
+# React + TypeScript + Vite
 
-Estudy is an e-learning platform to choose learning fields from different categories fields. Finding the best mentor and guideline is one of the first ways to build up a career. After choosing a course, users can find proper guideline from mentor.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Tool Stack
+Currently, two official plugins are available:
 
--   Reactjs
--   TailwindCss
--   AntDesign
--   Styled-Component
--   React-Query
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Usage
+## Expanding the ESLint configuration
 
-Clone the repository
+If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-git clone [this repository](https://github.com/chimobi-justice/Estudy.git)
+- Configure the top-level `parserOptions` property like this:
 
--   Change directories into Estudy
+```js
+export default {
+  // other rules...
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['./tsconfig.json', './tsconfig.node.json'],
+    tsconfigRootDir: __dirname,
+  },
+}
+```
 
-cd Estudy
-
--   Install [NPM](https://nodejs.org/en/)
-
-npm install
-
--   Finally, run your project in the browser!
-
-Start the application on development mode by running npm run start
-
-### Corresponding Backend [Server Url](https://estudy-backend.onrender.com/api)
-
-### API Docs [API Docs](https://estudy-backend.onrender.com/api/docs)
-
-## How To Contribute
-Kindly refer to the guide above to setup, and reachout to admin for further instructions
-
-## Issues
-- Issues are always very welcome. Please be sure to create a constructive issue when necessary.
-
-## Pull Requests
-- Pull request are welcome if anything is missing or something is buggy. However, there are a couple of things you can do to make life easier for the maintainers.
-
-- Explain the issue that your PR is solving - or link to an existing issue
-- Follow the repository structure, and new sections in the corresponding folders
-- Ask questions to admin if unclear
+- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
+- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
+- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
